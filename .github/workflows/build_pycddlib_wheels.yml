@@ -1,0 +1,66 @@
+name: build pycddlib wheels
+
+on:
+  workflow_dispatch:
+
+# env:
+#   VCPKG_HASH: "d2ab3ed75fdf7027d6c59b493669326017540425"
+#   UV_SYSTEM_PYTHON: 1
+
+jobs:
+  build_wheel:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest"] #, "windows-latest"]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: mcmtroffaes/pycddlib
+          ref: 3.0.2
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y libcdd-dev libgmp-dev
+
+      - name: Build wheel (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: uv build --wheel
+
+      - name: Install dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install cddlib gmp
+
+      - name: Build wheel (macOS)
+        if: matrix.os == 'macos-latest'
+        run: env "CFLAGS=-I$(brew --prefix)/include -L$(brew --prefix)/lib" uv build --wheel
+
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg && ./bootstrap-vcpkg.bat && ./vcpkg.exe install cddlib:x64-windows-static-md-release
+
+      - name: Build wheel (Windows)
+        if: matrix.os == 'windows-latest'
+        run: uv build --wheel -C="--global-option=-Ivcpkg/installed/x64-windows-static-md-realease/include" -C="--global-option=-Lvcpkg/installed/x64-windows-static-md-realease/lib"
+
+      - name: Release current commit
+        uses: ncipollo/release-action@v1.18.0
+        with:
+          artifacts: "dist/*.whl"
+          tag: "pycddlib_wheels"
+          name: "pycddlib_wheels"
+          removeArtifacts: false
+          allowUpdates: true
+          replacesArtifacts: true
+          makeLatest: false

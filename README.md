@@ -1,7 +1,7 @@
 # Setting up the environment
 
 1. install `conda` using the distribution of your choice ([Anaconda](https://www.anaconda.com/download), [miniconda](/docs/getting-started/miniconda/install#windows-installation), [miniforge](https://github.com/conda-forge/miniforge), etc.).
-All should work as long as you have access to the `conda` executable in a fesh terminal.
+All should work as long as you have access to the `conda` executable in a fresh terminal.
 If you don't know what to choose, we recommend miniforge.
 
 2. Create the environment to use for the semester.
@@ -9,7 +9,7 @@ If you don't know what to choose, we recommend miniforge.
 ```bash
 conda create -n mpc2025 python=3.12 pip
 conda activate mpc2025
-pip install locked-requirements.txt
+pip install -r locked-requirements.txt
 ```
 
 # Updating the environment
@@ -18,7 +18,7 @@ If the `locked-requirements.txt` changes, pull the latest version of this repo, 
 ```bash
 git pull
 conda activate mpc2025
-pip install locked-requirements.txt
+pip install -r locked-requirements.txt
 ```
 
 # Relocking the dependencies (for TAs)

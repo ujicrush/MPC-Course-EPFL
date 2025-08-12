@@ -1,0 +1,37 @@
+name: Test env creation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_env_creation:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        # important for proper acivation of conda envs
+        shell: bash -el {0}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: mpc2025
+          python-version: 3.12
+          add-pip-as-python-dependency: true
+
+      - name: Check pip is used from conda env
+        run: which pip
+
+      - name: Install dependencies
+        run: pip install -r locked-requirements.txt --only-binary=pycddlib,mpt4py

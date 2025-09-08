@@ -11,8 +11,8 @@ conda info
 2. Clone this repo and create the environment to use for the semester.
 
 ```bash
-git clone https://github.com/PREDICT-EPFL/mpc2025public
-cd mpc2025public
+git clone https://github.com/PREDICT-EPFL/MPC-Course-EPFL.git
+cd MPC-Course-EPFL
 conda create -n mpc2025 python=3.12 pip
 conda activate mpc2025
 pip install -r locked-requirements.txt

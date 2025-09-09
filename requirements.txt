@@ -6,5 +6,5 @@ control
 casadi
 mpt4py
 jupyter
---find-links https://github.com/PREDICT-EPFL/mpc2025public/releases/expanded_assets/mpt4py_wheels
---find-links https://github.com/PREDICT-EPFL/mpc2025public/releases/expanded_assets/pycddlib_wheels
+--find-links https://github.com/PREDICT-EPFL/MPC-Course-EPFL/releases/expanded_assets/mpt4py_wheels
+--find-links https://github.com/PREDICT-EPFL/MPC-Course-EPFL/releases/expanded_assets/pycddlib_wheels

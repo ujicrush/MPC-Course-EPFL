@@ -50,7 +50,7 @@ jobs:
         shell: pwsh
         run: |
           $url = "https://files.pythonhosted.org/packages/95/5f/2c75a27084adccb3312d9db9046daa2e82e6918e40835008122e6edead10/pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
-          $out = "dist/pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
+          $out = "dist\pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
           iwr $url -OutFile $out
           Write-Host "Saved to $out"
 

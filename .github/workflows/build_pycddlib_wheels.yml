@@ -3,42 +3,7 @@ name: build pycddlib wheels
 on:
   workflow_dispatch:
 
-env:
-  VCPKG_HASH: "dd3097e305afa53f7b4312371f62058d2e665320"
-
 jobs:
-  update_vcpkg_cache:
-    runs-on: "windows-latest"
-    steps:
-      - name: Check for cache
-        uses: actions/cache@v4
-        id: vcpkg-installed-cache
-        with:
-          path: installed/
-          key: vcpkg-${{ env.VCPKG_HASH }}-${{ runner.os }}
-
-      - name: Clone vcpkg
-        uses: actions/checkout@v4
-        if: steps.vcpkg-installed-cache.outputs.cache-hit != 'true'
-        with:
-          repository: microsoft/vcpkg
-          ref: ${{ env.VCPKG_HASH }}
-
-      - name: Install cddlib
-        if: steps.vcpkg-installed-cache.outputs.cache-hit != 'true'
-        run: |
-          ./bootstrap-vcpkg.bat -disableMetrics
-          ./vcpkg.exe install cddlib:x64-windows-static-md-release
-          ls -R installed/x64-windows-static-md-release/include/
-          ls -R installed/x64-windows-static-md-release/lib/
-
-      - name: Upload vcpkg cache
-        uses: actions/upload-artifact@v4
-        with:
-          name: vcpkg-x64-${{ runner.os }}
-          path: installed/
-          if-no-files-found: error
-
   build_wheel:
     strategy:
       fail-fast: false
@@ -46,8 +11,8 @@ jobs:
         os: [
             "windows-latest",
             "ubuntu-latest",
-            "macos-latest", # macOS arm64
-            "macos-latest-large", # macOS x86_64
+            "macos-14", # macOS arm64
+            "macos-13", # macOS x86_64
           ]
 
     runs-on: ${{ matrix.os }}
@@ -82,15 +47,14 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: env "CFLAGS=-I$(brew --prefix)/include -L$(brew --prefix)/lib" uv build --wheel
 
-      - name: Install dependencies (Windows)
+      - name: Download pre-built wheel from PyPI (Windows)
         if: matrix.os == 'windows-latest'
-        uses: actions/download-artifact@v4
-        with:
-          name: vcpkg-x64-${{ runner.os }}
-
-      - name: Build wheel (Windows)
-        if: matrix.os == 'windows-latest'
-        run: uv build --wheel -C="--global-option=build_ext" -C="--global-option=-Ix64-windows-static-md-release/include/" -C="--global-option=-Lx64-windows-static-md-release/lib/"
+        shell: pwsh
+        run: |
+          $url = "https://files.pythonhosted.org/packages/95/5f/2c75a27084adccb3312d9db9046daa2e82e6918e40835008122e6edead10/pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
+          $out = "dist/pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
+          iwr $url -OutFile $out
+          Write-Host "Saved to $out"
 
       - name: Release current commit
         uses: ncipollo/release-action@v1.18.0

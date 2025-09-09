@@ -49,10 +49,12 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
-          $url = "https://files.pythonhosted.org/packages/95/5f/2c75a27084adccb3312d9db9046daa2e82e6918e40835008122e6edead10/pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
-          $out = "dist\pycddlib-3.0.2-cp312-cp312-win_amd64.whl"
-          iwr $url -OutFile $out
-          Write-Host "Saved to $out"
+          $ErrorActionPreference = 'Stop'
+          $uri = 'https://files.pythonhosted.org/packages/95/5f/2c75a27084adccb3312d9db9046daa2e82e6918e40835008122e6edead10/pycddlib-3.0.2-cp312-cp312-win_amd64.whl'
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          $out = 'dist/pycddlib-3.0.2-cp312-cp312-win_amd64.whl'
+          Invoke-WebRequest -Uri $uri -OutFile $out -UseBasicParsing
+          if (-not (Test-Path $out)) { throw "Download failed: file not found at $out" }
 
       - name: Release current commit
         uses: ncipollo/release-action@v1.18.0

@@ -38,11 +38,11 @@ jobs:
         run: uv build --wheel
 
       - name: Install dependencies (macOS)
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-13' || matrix.os == 'macos-14'
         run: brew install cddlib gmp
 
       - name: Build wheel (macOS)
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-13' || matrix.os == 'macos-14'
         run: env "CFLAGS=-I$(brew --prefix)/include -L$(brew --prefix)/lib" uv build --wheel
 
       - name: Download pre-built wheel from PyPI (Windows)

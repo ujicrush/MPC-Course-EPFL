@@ -1,0 +1,1422 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The geometry package &#8212; mpt4py 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mpt4py.geometry';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The solver package" href="mpt4py.solvers.html" />
+    <link rel="prev" title="Contents" href="contents.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">mpt4py 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Navigation:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="contents.html">Contents</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">The geometry package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.solvers.html">The solver package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.systems.html">The systems package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.controllers.html">The controller package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/mpt4py.geometry.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The geometry package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexset">convexset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet"><code class="docutils literal notranslate"><span class="pre">ConvexSet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.dim"><code class="docutils literal notranslate"><span class="pre">ConvexSet.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.distance"><code class="docutils literal notranslate"><span class="pre">ConvexSet.distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.extreme"><code class="docutils literal notranslate"><span class="pre">ConvexSet.extreme()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.project"><code class="docutils literal notranslate"><span class="pre">ConvexSet.project()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.seperate"><code class="docutils literal notranslate"><span class="pre">ConvexSet.seperate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.shoot"><code class="docutils literal notranslate"><span class="pre">ConvexSet.shoot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.support"><code class="docutils literal notranslate"><span class="pre">ConvexSet.support()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polyhedron">polyhedron</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron"><code class="docutils literal notranslate"><span class="pre">Polyhedron</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.A"><code class="docutils literal notranslate"><span class="pre">Polyhedron.A</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Ae"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Ae</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.H"><code class="docutils literal notranslate"><span class="pre">Polyhedron.H</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.He"><code class="docutils literal notranslate"><span class="pre">Polyhedron.He</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Hrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Hrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.R"><code class="docutils literal notranslate"><span class="pre">Polyhedron.R</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.V"><code class="docutils literal notranslate"><span class="pre">Polyhedron.V</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Vrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Vrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_dimension"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_dimension</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_hull"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_hull()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.b"><code class="docutils literal notranslate"><span class="pre">Polyhedron.b</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.be"><code class="docutils literal notranslate"><span class="pre">Polyhedron.be</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.bounding_box"><code class="docutils literal notranslate"><span class="pre">Polyhedron.bounding_box()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.cartesian_product"><code class="docutils literal notranslate"><span class="pre">Polyhedron.cartesian_product()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.cheby_center"><code class="docutils literal notranslate"><span class="pre">Polyhedron.cheby_center()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.codimension"><code class="docutils literal notranslate"><span class="pre">Polyhedron.codimension</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.contains"><code class="docutils literal notranslate"><span class="pre">Polyhedron.contains()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.dim"><code class="docutils literal notranslate"><span class="pre">Polyhedron.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.empty_set"><code class="docutils literal notranslate"><span class="pre">Polyhedron.empty_set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Hrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_Hrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Vrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_Vrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_bounds"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_bounds()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.get_facet"><code class="docutils literal notranslate"><span class="pre">Polyhedron.get_facet()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hasHrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hasHrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hasVrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hasVrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hausdorff_distance"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hausdorff_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.homogenize"><code class="docutils literal notranslate"><span class="pre">Polyhedron.homogenize()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.incidence_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.incidence_map</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.interior_point"><code class="docutils literal notranslate"><span class="pre">Polyhedron.interior_point()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.intersect"><code class="docutils literal notranslate"><span class="pre">Polyhedron.intersect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.inv_affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_adjacent"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_adjacent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_bounded"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_bounded</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_empty"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_empty</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_full_dim"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_full_dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_neighbor"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_neighbor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.lift"><code class="docutils literal notranslate"><span class="pre">Polyhedron.lift()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minHrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minHrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minVrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minVrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minkowski_sum"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minkowski_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.plot"><code class="docutils literal notranslate"><span class="pre">Polyhedron.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.pontryagin_difference"><code class="docutils literal notranslate"><span class="pre">Polyhedron.pontryagin_difference()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.projection"><code class="docutils literal notranslate"><span class="pre">Polyhedron.projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.sample"><code class="docutils literal notranslate"><span class="pre">Polyhedron.sample()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.singleton"><code class="docutils literal notranslate"><span class="pre">Polyhedron.singleton()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.volume"><code class="docutils literal notranslate"><span class="pre">Polyhedron.volume</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonotope">zonotope</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope"><code class="docutils literal notranslate"><span class="pre">Zonotope</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.G"><code class="docutils literal notranslate"><span class="pre">Zonotope.G</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.affine_map"><code class="docutils literal notranslate"><span class="pre">Zonotope.affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.c"><code class="docutils literal notranslate"><span class="pre">Zonotope.c</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.center"><code class="docutils literal notranslate"><span class="pre">Zonotope.center</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.dim"><code class="docutils literal notranslate"><span class="pre">Zonotope.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.generators"><code class="docutils literal notranslate"><span class="pre">Zonotope.generators</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.minkowski_sum"><code class="docutils literal notranslate"><span class="pre">Zonotope.minkowski_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.projection"><code class="docutils literal notranslate"><span class="pre">Zonotope.projection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ellipsoid">ellipsoid</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid"><code class="docutils literal notranslate"><span class="pre">Ellipsoid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid.dim"><code class="docutils literal notranslate"><span class="pre">Ellipsoid.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid.plot"><code class="docutils literal notranslate"><span class="pre">Ellipsoid.plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="the-geometry-package">
+<h1>The geometry package<a class="headerlink" href="#the-geometry-package" title="Link to this heading">#</a></h1>
+<section id="convexset">
+<h2>convexset<a class="headerlink" href="#convexset" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.geometry.convexset.</span></span><span class="sig-name descname"><span class="pre">ConvexSet</span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.dim">
+<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.dim" title="Link to this definition">#</a></dt>
+<dd><p>Returns the dimension of the convex set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.convexset.ConvexSet" title="mpt4py.geometry.convexset.ConvexSet"><span class="pre">ConvexSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">floating</span></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.distance" title="Link to this definition">#</a></dt>
+<dd><p>Compute the distance between this convex set <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> and the given point <span class="math notranslate nohighlight">\(z\)</span>
+or convex set <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
+<p>By providing real vector <span class="math notranslate nohighlight">\(z\)</span>, the distance between <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span>
+is computed by solving the optimization problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \min\limits_y &amp;\quad  \|z-y\|_2^2 \\
+        \text{s.t.} &amp;\quad y \in \mathcal{C}.
+\end{align*}\end{split}\]</div>
+<p>By providing a convex set <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>, the distance between <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>
+is computed by solving the optimization problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \min\limits_{x,y} &amp;\quad  \|x-y\|_2^2 \\
+        \text{s.t.} &amp;\quad x \in \mathcal{C}, \\
+        &amp;\quad y \in \mathcal{S}.
+\end{align*}\end{split}\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.extreme">
+<span class="sig-name descname"><span class="pre">extreme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.extreme" title="Link to this definition">#</a></dt>
+<dd><p>Computes an extreme point <span class="math notranslate nohighlight">\(y\)</span> of the set <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> in the direction <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \mathop{\arg\min}\limits_y &amp;\quad x^\top y \\
+        \text{s.t.} &amp;\quad y \in \mathcal{C} \\
+\end{align*}\end{split}\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.project">
+<span class="sig-name descname"><span class="pre">project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.project" title="Link to this definition">#</a></dt>
+<dd><p>Projects the given point <span class="math notranslate nohighlight">\(y\)</span> onto the set <span class="math notranslate nohighlight">\(\mathcal{C}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+        \min_x &amp;\quad \|x - y\|_2^2 \\
+        \text{s.t.} &amp;\quad x \in \mathcal{C}
+\end{aligned}\end{split}\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.seperate">
+<span class="sig-name descname"><span class="pre">seperate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mpt4py.html#mpt4py.Hyperplane" title="mpt4py.geometry.convexset.Hyperplane"><span class="pre">Hyperplane</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.seperate" title="Link to this definition">#</a></dt>
+<dd><p>Compute the maximal seperating hyperplane between the point x and the Set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.shoot">
+<span class="sig-name descname"><span class="pre">shoot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.shoot" title="Link to this definition">#</a></dt>
+<dd><p>Computes the solution to the optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \max\limits_\alpha &amp;\quad \alpha \\
+         \text{s.t.} &amp;\quad x_0 + \alpha r \in \mathcal{C}
+\end{align*}\end{split}\]</div>
+<p>The problem can be explained as to find the point that lies along the line given by the ray <span class="math notranslate nohighlight">\(r\)</span>
+which starts from the point <span class="math notranslate nohighlight">\(x_0\)</span> such that it still lies inside the set <span class="math notranslate nohighlight">\(\mathcal{C}\)</span>.
+Typically, the solution of this set is the point that lies on the boundary of the set,
+or can be Inf if the set is unbounded.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.ConvexSet.support">
+<span class="sig-name descname"><span class="pre">support</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#mpt4py.geometry.convexset.ConvexSet.support" title="Link to this definition">#</a></dt>
+<dd><p>Compute the support of the set <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> in the direction <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \max\limits_y &amp;\quad  x^\top y \\
+                \text{s.t.} &amp;\quad y \in \mathcal{C} \\
+\end{align*}\end{split}\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="polyhedron">
+<h2>polyhedron<a class="headerlink" href="#polyhedron" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.geometry.polyhedron.</span></span><span class="sig-name descname"><span class="pre">Polyhedron</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mpt4py.html#mpt4py.base.HData" title="mpt4py.base.HData"><span class="pre">HData</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mpt4py.html#mpt4py.base.VData" title="mpt4py.base.VData"><span class="pre">VData</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mpt4py.geometry.convexset.ConvexSet" title="mpt4py.geometry.convexset.ConvexSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConvexSet</span></code></a></p>
+<p>Represents a polyhedron - a set defined by the intersection of a finite number of inequalities.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.A">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.A" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(A\)</span> matrix in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.Ae">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ae</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.Ae" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(A_e\)</span> matrix in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.H">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">H</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.H" title="Link to this definition">#</a></dt>
+<dd><p>Return the contatenated <span class="math notranslate nohighlight">\([A \mid b]\)</span> matrix in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.He">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">He</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.He" title="Link to this definition">#</a></dt>
+<dd><p>Return the contatenated <span class="math notranslate nohighlight">\([A_e \mid b_e]\)</span> matrix in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.Hrep">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Hrep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="mpt4py.html#mpt4py.base.HData" title="mpt4py.base.HData"><span class="pre">HData</span></a></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.Hrep" title="Link to this definition">#</a></dt>
+<dd><p>Returns the H-representation of the polyhedron. Computes it if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.R">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">R</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.R" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(R\)</span> matrix in V-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.V">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">V</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.V" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(V\)</span> matrix in V-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.Vrep">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vrep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="mpt4py.html#mpt4py.base.VData" title="mpt4py.base.VData"><span class="pre">VData</span></a></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.Vrep" title="Link to this definition">#</a></dt>
+<dd><p>Returns the V-representation of the polyhedron. Computes it if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.affine_dimension">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">affine_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_dimension" title="Link to this definition">#</a></dt>
+<dd><p>Compute the affine dimension of the polyhedron, i.e.,
+the number of degrees of freedom you have when moving within the affine set.</p>
+<div class="admonition-math admonition">
+<p class="admonition-title">Math</p>
+<p>The implementation is based on the method proposed in Section 7.3 of
+<a class="reference external" href="https://www.research-collection.ethz.ch/handle/20.500.11850/426218">Fukuda’s Polyhedral Computation</a>.</p>
+<ul class="simple">
+<li><p>For a V-polyhedron <span class="math notranslate nohighlight">\(P = \{ x \in \mathbb{R}^n \mid x = V^\top \lambda + R^\top\mu, 1^\top \lambda = 1, \mu \geq 0, \lambda \geq 0\}\)</span>,</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{affdim}(P) = \text{rank} \begin{bmatrix} V^\top &amp; R^\top \\ 1_{1\times n} &amp; 0_{1\times n} \end{bmatrix} -1.\end{split}\]</div>
+<ul class="simple">
+<li><p>For a H-polyhedron <span class="math notranslate nohighlight">\(P = \{ x \in \mathbb{R}^n \mid A x \leq b, A_e x = b_e \}\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{affdim}(P) = n - \text{rank}\tilde{A}_e.\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{A}_e\)</span> is the matrix containing all explicit and implicit equalities.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a polyhedron is empty, its affine dimension is defined as -1.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.affine_hull">
+<span class="sig-name descname"><span class="pre">affine_hull</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mpt4py.html#mpt4py.AffineSet" title="mpt4py.geometry.convexset.AffineSet"><span class="pre">AffineSet</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_hull" title="Link to this definition">#</a></dt>
+<dd><p>Compute the affine hull of the polyhedron, which is the smallest affine set
+that contains it.</p>
+<p>This function detects if the polyhedron has an implicit affine set,
+e.g., if the inequalities contain <span class="math notranslate nohighlight">\(\alpha^\top x \leq \beta\)</span> and <span class="math notranslate nohighlight">\(\alpha^\top x \geq \beta\)</span>.</p>
+<p>If <cite>inplace == True</cite>, then the HData of this object is modified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.affine_map">
+<span class="sig-name descname"><span class="pre">affine_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_map" title="Link to this definition">#</a></dt>
+<dd><p>Computes an affine map <span class="math notranslate nohighlight">\(P \rightarrow Q\)</span> of polyhedron <span class="math notranslate nohighlight">\(P\)</span> to polyhedron <span class="math notranslate nohighlight">\(Q\)</span>
+based on the transformation matrix <span class="math notranslate nohighlight">\(T\)</span>. The polyhedron <span class="math notranslate nohighlight">\(Q\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[Q = \{ y \in \mathbb{R}^n \mid y=Tx+t, x \in P \subseteq \mathbb{R}^d \}\]</div>
+<p>The matrix <span class="math notranslate nohighlight">\(T\)</span> must be real with <span class="math notranslate nohighlight">\(n\)</span> rows and <span class="math notranslate nohighlight">\(d\)</span> columns.</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(n &lt; d\)</span> then this operation is referred to as projection.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(n = d\)</span> then this operation is referred to as rotation/skew.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(n &gt; d\)</span> then this operation is referred to as lifting.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This operation is also overloaded via <code class="docutils literal notranslate"><span class="pre">__matmul__</span></code> and <code class="docutils literal notranslate"><span class="pre">__add__</span></code>. So for a Polyhedron object <code class="docutils literal notranslate"><span class="pre">P</span></code>, <code class="docutils literal notranslate"><span class="pre">P.affine_map(T,</span> <span class="pre">t)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">&#64;</span> <span class="pre">P</span> <span class="pre">+</span> <span class="pre">t</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map" title="mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map"><code class="xref py py-func docutils literal notranslate"><span class="pre">inv_affine_map()</span></code></a> - Compute the inverse affine map</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.b">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.b" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(b\)</span> vector in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.be">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">be</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.be" title="Link to this definition">#</a></dt>
+<dd><p>Return the <span class="math notranslate nohighlight">\(b_e\)</span> vector in H-representation. Will be computed if needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.bounding_box">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.convexset.ConvexSet" title="mpt4py.geometry.convexset.ConvexSet"><span class="pre">ConvexSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.bounding_box" title="Link to this definition">#</a></dt>
+<dd><p>Compute the minimum bounding box of the polyhedron.</p>
+<p>If the polyhedron is unbounded, then the box will be unbounded in those directions.</p>
+<p>Note that if the polyhedron has an affine hull, then the bounding box will
+take the form</p>
+<div class="math notranslate nohighlight">
+\[B = \{ x\in\mathbb{R}^n \mid x_{lb} \leq x \leq x_{ub}, A_e x = b_e \}.\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.cartesian_product">
+<span class="sig-name descname"><span class="pre">cartesian_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.cartesian_product" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Cartesian product with another polyhedron. The Cartesian product of two polyhedra
+<span class="math notranslate nohighlight">\(P\subseteq\mathbb{R}^m\)</span> and <span class="math notranslate nohighlight">\(Q\subseteq\mathbb{R}^n\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[P \times Q := \{ (x,y) \in\mathbb{R}^{m+n} \mid x\in P, y \in Q \}.\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.cheby_center">
+<span class="sig-name descname"><span class="pre">cheby_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raise_on_empty_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.cheby_center" title="Link to this definition">#</a></dt>
+<dd><p>Compute the center and radius of the polyhedron’s Chebyshev ball.</p>
+<p>Given a polyhedron with H-representation, the center <span class="math notranslate nohighlight">\(c\)</span> and radius <span class="math notranslate nohighlight">\(r\)</span> of the Chebyshev ball
+is computed by solving the following Linear Programming:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \max_{c,r} &amp;\quad r \\
+        \text{s.t.} &amp;\quad a_i c + \|a_i\|_2 r \leq b_i, \quad \forall i\in \{1,...,m\} \\
+                &amp;\quad A_e c = b_e
+\end{align*}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span> th row of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(m\)</span> is the number of rows of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If the polyhedron is empty, the Chebyshev center is set to <span class="math notranslate nohighlight">\(-\infty\)</span> and the radius is set to <span class="math notranslate nohighlight">\(-\infty\)</span>.</p></li>
+<li><p>If the polyhedron is unbounded, the Chebyshev center is set to <span class="math notranslate nohighlight">\(+\infty\)</span> and the radius is set to <span class="math notranslate nohighlight">\(+\infty\)</span>.</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>If the polyhedron is lower-dimensional and it only has a V-representation, then its H-representation is non-unique. Different H-representations give different Chebyshev balls.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.codimension">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">codimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.codimension" title="Link to this definition">#</a></dt>
+<dd><p>Returns the codimension of the polyhedron, i.e., the number of constraints/dimensions
+by which the affine set is “lower” than the ambient space.</p>
+<p>For example, suppose we have a non-empty polyhedron</p>
+<div class="math notranslate nohighlight">
+\[P = \{ x \in \mathbb{R}^n \mid A x \leq b, A_e x = b_e \},\]</div>
+<p>where the rank of <span class="math notranslate nohighlight">\(A_e\)</span> (number of rows) is <span class="math notranslate nohighlight">\(m\)</span>.
+The codimension of <span class="math notranslate nohighlight">\(P\)</span> is <span class="math notranslate nohighlight">\(m\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.convexset.ConvexSet" title="mpt4py.geometry.convexset.ConvexSet"><span class="pre">ConvexSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.contains" title="Link to this definition">#</a></dt>
+<dd><p>Determine if the given point or convex set is a subset of this polyhedron or not.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The H-representation of the self polyhedron is required to test if one set is contained in another. Will be computed if needed.</p></li>
+<li><p>If the inner set is unbounded and not a polyhedron, then this will likely raise an error.</p></li>
+</ul>
+</div>
+<div class="admonition-math admonition">
+<p class="admonition-title">Math</p>
+<p>For two homogenized polyhedra <span class="math notranslate nohighlight">\(P = \{x \mid Ax\leq 0, A_e x=0 \}\)</span> and <span class="math notranslate nohighlight">\(Q=\{x\mid Bx\leq 0, B_e x=0 \}\)</span>, to test if <span class="math notranslate nohighlight">\(Q\subseteq P\)</span>:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(Q\)</span> has V-rep, just test that all vertices and rays of <span class="math notranslate nohighlight">\(Q\)</span> are contained in <span class="math notranslate nohighlight">\(P\)</span>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(Q\)</span> only has H-rep, use Farkas’ lemma: <span class="math notranslate nohighlight">\(Q\subseteq P\)</span> if and only if the following LP is feasible:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \min_{\lambda, \mu, \mu_e} &amp;\quad 0 \\
+        \text{s.t.} &amp;\quad B = \lambda A + \mu A_e \\
+                &amp;\quad B_e = \mu_e A_e
+\end{align*}\end{split}\]</div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.dim">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.dim" title="Link to this definition">#</a></dt>
+<dd><p>Return the polyhedron’s dimension of representation.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_dimension" title="mpt4py.geometry.polyhedron.Polyhedron.affine_dimension"><code class="xref py py-func docutils literal notranslate"><span class="pre">affine_dimension()</span></code></a> - Compute the affine dimension of the polyhedron.</p></li>
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.codimension" title="mpt4py.geometry.polyhedron.Polyhedron.codimension"><code class="xref py py-func docutils literal notranslate"><span class="pre">codimension()</span></code></a> - Compute the codimension of the polyhedron.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.empty_set">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">empty_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.empty_set" title="Link to this definition">#</a></dt>
+<dd><p>Create an empty polyhedron of given dimension which has a H-rep <span class="math notranslate nohighlight">\(P = \{x \mid \mathbf{0}^{\top} x \leq -1\}\)</span>
+and a V-rep (no vertices or rays).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.from_Hrep">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_Hrep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Hrep" title="Link to this definition">#</a></dt>
+<dd><p>Create a polyhedron from its H-representation.</p>
+<p>This method initializes a polyhedron object using the H-representation
+data provided as arguments, which is encapsulated in an <code class="xref py py-class docutils literal notranslate"><span class="pre">HData</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments to initialize the H-representation.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to initialize the H-representation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyhedron</span></code></a> class initialized with
+the given H-representation data.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Vrep" title="mpt4py.geometry.polyhedron.Polyhedron.from_Vrep"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_Vrep()</span></code></a> - Create a polyhedron instance from its V-representation.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.from_Vrep">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_Vrep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Vrep" title="Link to this definition">#</a></dt>
+<dd><p>Create a polyhedron from its V-representation.</p>
+<p>This method initializes a polyhedron object using the V-representation
+data provided as arguments, which is encapsulated in an <code class="xref py py-class docutils literal notranslate"><span class="pre">VData</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments to initialize the V-representation.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to initialize the V-representation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyhedron</span></code></a> class initialized with
+the given V-representation data.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Hrep" title="mpt4py.geometry.polyhedron.Polyhedron.from_Hrep"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_Hrep()</span></code></a> - Create a polyhedron instance from its H-representation.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.from_bounds">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.from_bounds" title="Link to this definition">#</a></dt>
+<dd><p>Create a polyhedron from upper and lower bounds.</p>
+<p>If the upper bounds contain <code class="docutils literal notranslate"><span class="pre">numpy.inf</span></code> or the lower bounds
+contain <code class="docutils literal notranslate"><span class="pre">-numpy.inf</span></code>, the corresponding dimensions are treated as <strong>unbounded</strong>.</p>
+<p>The resulting polyhedron has both H-representation and V-representation. The H-rep is
+<span class="math notranslate nohighlight">\(P = \{x \mid x_{lb} \leq x \leq x_{ub}\}\)</span> and the minimal V-rep is computed accordingly.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.get_facet">
+<span class="sig-name descname"><span class="pre">get_facet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.get_facet" title="Link to this definition">#</a></dt>
+<dd><p>Extract the facets of the polyhedron specified by the inequality indices. Each facet
+is a polyhedron formed by rewriting the indexed ineqality as an equality constraint.</p>
+<p>For a polyhedron <span class="math notranslate nohighlight">\(P\)</span> in H-representation:</p>
+<div class="math notranslate nohighlight">
+\[P = \{ x\in\mathbb{R}^n \mid a_i^\top x \leq b_i, i \in \{1, ..., m\},
+A_e x = b_e \}\]</div>
+<p>given an index <span class="math notranslate nohighlight">\(k\)</span>, the facet polyhedron <span class="math notranslate nohighlight">\(Q\)</span> is built as:</p>
+<div class="math notranslate nohighlight">
+\[Q = \{ x\in\mathbb{R}^n \mid  a_i^\top x \leq b_i, i \in \{1, ..., m\} \backslash \{k\},
+a_k^\top x = b_k, A_e x = b_e \}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – an integer or list of integers. If not provided, a list of all facets will be returned.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The polyhedron must have minimal (irredundant) H-representation,
+otherwise an error will be thrown. Consider calling <a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.minHrep" title="mpt4py.geometry.polyhedron.Polyhedron.minHrep"><code class="xref py py-func docutils literal notranslate"><span class="pre">minHrep()</span></code></a> beforehand.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.hasHrep">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hasHrep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.hasHrep" title="Link to this definition">#</a></dt>
+<dd><p>Tell if the polyhedron has a H-representation or not.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.hasVrep">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hasVrep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.hasVrep" title="Link to this definition">#</a></dt>
+<dd><p>Tell if the polyhedron has a V-representation or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.hausdorff_distance">
+<span class="sig-name descname"><span class="pre">hausdorff_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.hausdorff_distance" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Hausdorff distance between two polyhedra.</p>
+<p>For two polyhedra <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span>, the Hausdorff distance is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d_H(P, Q) = \max\left\{ \max\limits_{x\in P} \min\limits_{y\in Q} \|x-y\|, \max\limits_{y\in Q} \min\limits_{x\in P} \|x-y\| \right\}.\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is computationally expensive, as it requires to compute the distances of all vertices to another set for both polyhedra.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.homogenize">
+<span class="sig-name descname"><span class="pre">homogenize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.homogenize" title="Link to this definition">#</a></dt>
+<dd><p>Homogenize the Polyhedron into a cone.</p>
+<ul class="simple">
+<li><p>For an H-representation <span class="math notranslate nohighlight">\(P = \{ x\in\mathbb{R}^n \mid A x \leq b, A_e x = b_e \}\)</span>, its homogenization is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\bar{P} = \{ y\in\mathbb{R}^{n+1} \mid [A ~-b] \leq 0, [A_e ~-b_e] x = 0 \}.\]</div>
+<ul class="simple">
+<li><p>For a V-representation: <span class="math notranslate nohighlight">\(P = \{ x\in\mathbb{R}^n \mid x = V^\top v + R^\top r, r \geq 0, v\geq 0, 1^\top v = 1 \}\)</span>, its homogenization is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_h = \{ y\in\mathbb{R}^{n+1} \mid y=\begin{bmatrix} V^\top &amp; R^\top \\ 1 &amp; 0\end{bmatrix} l, l \geq 0 \}.\end{split}\]</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.incidence_map">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">incidence_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.incidence_map" title="Link to this definition">#</a></dt>
+<dd><p>Compute the incidence map of the polyhedron.</p>
+<p>The incidence map describes containment of vertices in facets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function computes both irredundant H-rep and V-rep and can be time consuming.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function is <strong>not implemented yet</strong>. Calling it will raise
+<code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.interior_point">
+<span class="sig-name descname"><span class="pre">interior_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">facet_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.interior_point" title="Link to this definition">#</a></dt>
+<dd><p>Compute an interior point of the polyhedron.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>facet_index</strong> (<em>int</em>) – the index of the facet to compute the interior point for.
+If None, compute the interior point of the whole polyhedron.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An interior point of the polyhedron and a boolean indicating whether the point is strictly inside the polyhedron.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.intersect">
+<span class="sig-name descname"><span class="pre">intersect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.intersect" title="Link to this definition">#</a></dt>
+<dd><p>Compute the intersection of this polyhedron with another Polyhedron.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map">
+<span class="sig-name descname"><span class="pre">inv_affine_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map" title="Link to this definition">#</a></dt>
+<dd><p>Computes an inverse aﬃne map <span class="math notranslate nohighlight">\(Q\)</span> of polyhedron <span class="math notranslate nohighlight">\(P\)</span> based on the transformation matrix <span class="math notranslate nohighlight">\(T\)</span>
+and vector <span class="math notranslate nohighlight">\(t\)</span>. The polyhedron <span class="math notranslate nohighlight">\(Q\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[Q = \{ x \in \mathbb{R}^n \mid T x + t \in P \subseteq \mathbb{R}^n \}\]</div>
+<p>The matrix <span class="math notranslate nohighlight">\(T\)</span> must be a square real matrix. The vector <span class="math notranslate nohighlight">\(t\)</span>, if omitted, defaults to a zero vector
+of corresponding dimension.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_map" title="mpt4py.geometry.polyhedron.Polyhedron.affine_map"><code class="xref py py-func docutils literal notranslate"><span class="pre">affine_map()</span></code></a> - Compute the affine map</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.is_adjacent">
+<span class="sig-name descname"><span class="pre">is_adjacent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.is_adjacent" title="Link to this definition">#</a></dt>
+<dd><p>Test if a polyhedron shares a facet with another polyhedron.</p>
+<p>Return true if the polyhedron P has a facet-to-facet property with the polyhedron Q. Both
+polyhedra must be in H-representation. If they are not, the irredundant H-representations
+will be computed.</p>
+<p>The function tests if polyhedra P and Q are adjacent by checking if their intersection is of
+dimension <span class="math notranslate nohighlight">\(d-1\)</span> and if the intersection is a facet of both polyhedra.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.is_neighbor" title="mpt4py.geometry.polyhedron.Polyhedron.is_neighbor"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_neighbor()</span></code></a> - Determine if two polyhedra are neighbors.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.is_bounded">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_bounded</span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.is_bounded" title="Link to this definition">#</a></dt>
+<dd><p>Returns <cite>True</cite> if the polyhedron is bounded and <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.is_empty">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_empty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.is_empty" title="Link to this definition">#</a></dt>
+<dd><p>Returns <cite>True</cite> if the polyhedron is empty and <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.is_full_dim">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_full_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.is_full_dim" title="Link to this definition">#</a></dt>
+<dd><p>Determine if the polyhedron is full dimensional or not.</p>
+<p>A polyhedron <span class="math notranslate nohighlight">\(P\in\mathbb{R}^n\)</span> is full dimensional if and only if the dimension of its affine dimension
+is the same as <span class="math notranslate nohighlight">\(n\)</span> (its dimension of representation), or equivalently if there exists a non-empty ball
+of dimension <span class="math notranslate nohighlight">\(n\)</span> that is contained within it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.is_neighbor">
+<span class="sig-name descname"><span class="pre">is_neighbor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.is_neighbor" title="Link to this definition">#</a></dt>
+<dd><p>Test if a polyhedron touches another polyhedron along a given facet.</p>
+<p>Return <cite>True</cite> if the polyhedron <span class="math notranslate nohighlight">\(P\)</span> shares with another polyhedron <span class="math notranslate nohighlight">\(Q\)</span> a part of a common facet. Both
+polyhedra must be in H-representation. If they are not, the irredundant H-representations will be computed.</p>
+<p>The function tests if the intersection of two polyhedra <span class="math notranslate nohighlight">\(P\)</span> and S in dimension d is nonempty
+and is of dimension <span class="math notranslate nohighlight">\(d-1\)</span>. If this holds, then the two polyhedra are touching themself along
+one facet.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If one of the polyhedra is empty, the function will return <cite>False</cite>.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron.is_adjacent" title="mpt4py.geometry.polyhedron.Polyhedron.is_adjacent"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_adjacent()</span></code></a> - Determine if two polyhedra are adjacent.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.lift">
+<span class="sig-name descname"><span class="pre">lift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.lift" title="Link to this definition">#</a></dt>
+<dd><p>Lift the polyhedron <span class="math notranslate nohighlight">\(P\in\mathbb{R}^n\)</span> to a higher dimension in <span class="math notranslate nohighlight">\(\mathbb{R}^{n+m}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\{ (x, y) \mid x \in P, y \in \mathbb{R}^m \}.\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.minHrep">
+<span class="sig-name descname"><span class="pre">minHrep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mpt4py.html#mpt4py.base.HData" title="mpt4py.base.HData"><span class="pre">HData</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.minHrep" title="Link to this definition">#</a></dt>
+<dd><p>Compute the minimal H-representation of the polyhedron.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inplace</strong> – If True, the current object is modified.</p></li>
+<li><p><strong>use_cdd</strong> – If True, the <cite>pycddlib</cite> is used for the redundancy elimination. Otherwise the built-in implementation is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The minimal H-representation of the polyhedron.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If an H-representation is already known, then this function performs redundancy elimination. Otherwise, facet enumeration will be performed first.</p></li>
+<li><p>If the polyhedron is empty, no redundancy elimination will be performed.</p></li>
+</ul>
+</div>
+<div class="admonition-math admonition">
+<p class="admonition-title">Math</p>
+<p>The redundancy elimination of H-representation performs the following steps.</p>
+<p>First, attempt to identify some irredundant inequalities using ray shooting heuristics if the polyhedron is <strong>full-dimensional</strong>.
+Draw a number of rays from a strict interior point along random directions. For each ray, the inequality it intersects first must be irredundant.</p>
+<p>Second, identify redundant inequalities using Linear Programming. For each inequality <span class="math notranslate nohighlight">\(a_j x \leq b_j\)</span>, solve the following LP:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \max_x &amp;\quad a_j x \\
+        \text{s.t.} &amp;\quad a_i x \leq b_i, \quad \forall i\neq j \\
+                                &amp;\quad a_j x \leq b_j + 1, \\
+                                &amp;\quad A_e x = b_e. \\
+\end{align*}\end{split}\]</div>
+<p>This LP is guaranteed to be bounded. The inequality <span class="math notranslate nohighlight">\(a_j x \leq b_j\)</span> is <strong>irredundant</strong> if the LP’s optimal objective value is strictly greater than <span class="math notranslate nohighlight">\(b_j\)</span> and <strong>redundant</strong> otherwise.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.minVrep">
+<span class="sig-name descname"><span class="pre">minVrep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mpt4py.html#mpt4py.base.VData" title="mpt4py.base.VData"><span class="pre">VData</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.minVrep" title="Link to this definition">#</a></dt>
+<dd><p>Returns the minimal V-representation of the polyhedron.</p>
+<p>If inplace is True, then the current object is modified.</p>
+<div class="admonition-math admonition">
+<p class="admonition-title">Math</p>
+<p>The redundancy elimination of V-representation performs the following steps:</p>
+<p>1. Eliminate redundant rays. An extreme ray <span class="math notranslate nohighlight">\(r_j\)</span> is redundant if it can be written as the non-negative
+linear combination of other rays <span class="math notranslate nohighlight">\(r_i\)</span>, i.e., if the following LP is feasible:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \min_\mu &amp;\quad 0 \\
+        \text{s.t.} &amp;\quad r_j = \sum\limits_{i\neq j} \mu_i r_i \\
+                                &amp;\quad \mu_i \geq 0
+\end{align*}\end{split}\]</div>
+<p>2. Eliminate redundant vertices. The method we use is an extension of Section 2.19 in <a class="reference external" href="https://people.inf.ethz.ch/fukudak/Doc_pub/polyfaq220115c.pdf">Fukuda’s PolyFAQ</a>.
+A vertex <span class="math notranslate nohighlight">\(v_j\)</span> is redundant if the following LP is infeasible:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+        \min\limits_{z, z_0} &amp;\quad 0 \\
+        \text{s.t.} &amp;\quad z^\top v_j &gt; z_0 \\
+                                &amp;\quad z^\top v_i \leq z_0 \\
+                                &amp;\quad z^\top r_k &lt; 0
+\end{align*}\end{split}\]</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.minkowski_sum">
+<span class="sig-name descname"><span class="pre">minkowski_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.minkowski_sum" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Minkowski sum of the polyhedron with a point or another polyhedron.</p>
+<ul class="simple">
+<li><p>The Minkowski sum of a polyhedron <span class="math notranslate nohighlight">\(P\subseteq\mathbb{R}^n\)</span> and a point <span class="math notranslate nohighlight">\(z\in\mathbb{R}^n\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P \oplus z = \{ x+z \mid x\in P \}.\]</div>
+<ul class="simple">
+<li><p>The Minkowski sum of two polyhedra <span class="math notranslate nohighlight">\(P\subseteq\mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(Q\subseteq\mathbb{R}^n\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P \oplus Q = \{ x+y \mid x\in P, y\in Q \}.\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Plotter</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.plot" title="Link to this definition">#</a></dt>
+<dd><p>Plot the Polyhedron.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Require V-representation. Will be computed if necessary.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.pontryagin_difference">
+<span class="sig-name descname"><span class="pre">pontryagin_difference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.pontryagin_difference" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Pontryagin difference between a polyhedron with a point or another polyhedron.</p>
+<ul class="simple">
+<li><p>The Pontryagin difference of a polyhedron <span class="math notranslate nohighlight">\(P\subseteq\mathbb{R}^n\)</span> with a point <span class="math notranslate nohighlight">\(z\in\mathbb{R}^n\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P \ominus z = \{ x-z \mid x\in P \} = P \oplus (-z).\]</div>
+<ul class="simple">
+<li><p>The Pontryagin difference of a polyhedron <span class="math notranslate nohighlight">\(P\subseteq\mathbb{R}^n\)</span> with another polyhedron <span class="math notranslate nohighlight">\(Q\subseteq\mathbb{R}^n\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P \ominus Q = \{ x\in P \mid \forall y\in Q, x+y \in P \}.\]</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.projection">
+<span class="sig-name descname"><span class="pre">projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.projection" title="Link to this definition">#</a></dt>
+<dd><p>Compute the orthogonal projection of the polyhedron on given dimensions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strictly_interior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'hit_and_run'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'reject'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'reject'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_attempts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whitening</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.sample" title="Link to this definition">#</a></dt>
+<dd><p>Uniformuly sample random points inside the polyhedron. Requires the polyhedron to be bounded and non-empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.singleton">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.singleton" title="Link to this definition">#</a></dt>
+<dd><p>Create a polyhedron that contains only a single point. The H-rep is <span class="math notranslate nohighlight">\(P = \{x \mid x = v\}\)</span>
+where <span class="math notranslate nohighlight">\(v\)</span> is the given point. The V-rep contains the point as the only vertex and no rays.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.polyhedron.Polyhedron.volume">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mpt4py.geometry.polyhedron.Polyhedron.volume" title="Link to this definition">#</a></dt>
+<dd><p>Compute the volume of this polyhedron.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The volume of a polyhedron is defined as 0 if it is lower-dimensional or empty and <span class="math notranslate nohighlight">\(\infty\)</span> if it is full-dimensional and unbounded.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="zonotope">
+<h2>zonotope<a class="headerlink" href="#zonotope" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.geometry.zonotope.</span></span><span class="sig-name descname"><span class="pre">Zonotope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyhedron</span></code></a></p>
+<p>The zonotope class.</p>
+<p>A zonotope <span class="math notranslate nohighlight">\(\mathcal{Z}\subset \mathbb{R}^n\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{Z} := \{ c+\sum\limits_{i=1}^p \beta_i g_i \mid \beta_i \in \left[-1,1\right] \}\]</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.G">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">G</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.G" title="Link to this definition">#</a></dt>
+<dd><p>Get the generator matrix of the zonotope.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.affine_map">
+<span class="sig-name descname"><span class="pre">affine_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.zonotope.Zonotope" title="mpt4py.geometry.zonotope.Zonotope"><span class="pre">Zonotope</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.affine_map" title="Link to this definition">#</a></dt>
+<dd><p>Apply an affine transformation to the zonotope.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> – Affine transformation matrix.</p></li>
+<li><p><strong>t</strong> – Translation vector.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.c">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.c" title="Link to this definition">#</a></dt>
+<dd><p>Get the center of the zonotope.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.center">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">center</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.center" title="Link to this definition">#</a></dt>
+<dd><p>Get the center of the zonotope.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.dim">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.dim" title="Link to this definition">#</a></dt>
+<dd><p>Return the polyhedron’s dimension of representation.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">affine_dimension()</span></code> - Compute the affine dimension of the polyhedron.</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">codimension()</span></code> - Compute the codimension of the polyhedron.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.generators">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.generators" title="Link to this definition">#</a></dt>
+<dd><p>Get the generator matrix of the zonotope.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.minkowski_sum">
+<span class="sig-name descname"><span class="pre">minkowski_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.zonotope.Zonotope" title="mpt4py.geometry.zonotope.Zonotope"><span class="pre">Zonotope</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.polyhedron.Polyhedron" title="mpt4py.geometry.polyhedron.Polyhedron"><span class="pre">Polyhedron</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mpt4py.geometry.zonotope.Zonotope" title="mpt4py.geometry.zonotope.Zonotope"><span class="pre">Zonotope</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.minkowski_sum" title="Link to this definition">#</a></dt>
+<dd><p>Compute the Minkowski sum of two zonotopes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.zonotope.Zonotope.projection">
+<span class="sig-name descname"><span class="pre">projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mpt4py.geometry.zonotope.Zonotope" title="mpt4py.geometry.zonotope.Zonotope"><span class="pre">Zonotope</span></a></span></span><a class="headerlink" href="#mpt4py.geometry.zonotope.Zonotope.projection" title="Link to this definition">#</a></dt>
+<dd><p>Compute the orthogonal projection of a zonotope onto given dimensions.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ellipsoid">
+<h2>ellipsoid<a class="headerlink" href="#ellipsoid" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.Ellipsoid">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.geometry.convexset.</span></span><span class="sig-name descname"><span class="pre">Ellipsoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.geometry.convexset.Ellipsoid" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mpt4py.geometry.convexset.ConvexSet" title="mpt4py.geometry.convexset.ConvexSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConvexSet</span></code></a></p>
+<p>Represents an ellipsoid:</p>
+<div class="math notranslate nohighlight">
+\[\{ x \in \mathbb{R}^n \mid (x - c)^\top  P (x - c) \leq r^2 \}\]</div>
+<p>where <span class="math notranslate nohighlight">\(P\in\mathbb{R}^{n\times n}\)</span> is positive semi-definite.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.Ellipsoid.dim">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.geometry.convexset.Ellipsoid.dim" title="Link to this definition">#</a></dt>
+<dd><p>Returns the dimension of the convex set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.geometry.convexset.Ellipsoid.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PlotterProtocol</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.geometry.convexset.Ellipsoid.plot" title="Link to this definition">#</a></dt>
+<dd><p>Plot the ellipsoid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fig</strong> (<em>PlotterProtocol</em>) – _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="contents.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Contents</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mpt4py.solvers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The solver package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexset">convexset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet"><code class="docutils literal notranslate"><span class="pre">ConvexSet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.dim"><code class="docutils literal notranslate"><span class="pre">ConvexSet.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.distance"><code class="docutils literal notranslate"><span class="pre">ConvexSet.distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.extreme"><code class="docutils literal notranslate"><span class="pre">ConvexSet.extreme()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.project"><code class="docutils literal notranslate"><span class="pre">ConvexSet.project()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.seperate"><code class="docutils literal notranslate"><span class="pre">ConvexSet.seperate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.shoot"><code class="docutils literal notranslate"><span class="pre">ConvexSet.shoot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.ConvexSet.support"><code class="docutils literal notranslate"><span class="pre">ConvexSet.support()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polyhedron">polyhedron</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron"><code class="docutils literal notranslate"><span class="pre">Polyhedron</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.A"><code class="docutils literal notranslate"><span class="pre">Polyhedron.A</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Ae"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Ae</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.H"><code class="docutils literal notranslate"><span class="pre">Polyhedron.H</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.He"><code class="docutils literal notranslate"><span class="pre">Polyhedron.He</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Hrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Hrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.R"><code class="docutils literal notranslate"><span class="pre">Polyhedron.R</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.V"><code class="docutils literal notranslate"><span class="pre">Polyhedron.V</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.Vrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.Vrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_dimension"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_dimension</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_hull"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_hull()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.affine_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.b"><code class="docutils literal notranslate"><span class="pre">Polyhedron.b</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.be"><code class="docutils literal notranslate"><span class="pre">Polyhedron.be</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.bounding_box"><code class="docutils literal notranslate"><span class="pre">Polyhedron.bounding_box()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.cartesian_product"><code class="docutils literal notranslate"><span class="pre">Polyhedron.cartesian_product()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.cheby_center"><code class="docutils literal notranslate"><span class="pre">Polyhedron.cheby_center()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.codimension"><code class="docutils literal notranslate"><span class="pre">Polyhedron.codimension</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.contains"><code class="docutils literal notranslate"><span class="pre">Polyhedron.contains()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.dim"><code class="docutils literal notranslate"><span class="pre">Polyhedron.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.empty_set"><code class="docutils literal notranslate"><span class="pre">Polyhedron.empty_set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Hrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_Hrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_Vrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_Vrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.from_bounds"><code class="docutils literal notranslate"><span class="pre">Polyhedron.from_bounds()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.get_facet"><code class="docutils literal notranslate"><span class="pre">Polyhedron.get_facet()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hasHrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hasHrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hasVrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hasVrep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.hausdorff_distance"><code class="docutils literal notranslate"><span class="pre">Polyhedron.hausdorff_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.homogenize"><code class="docutils literal notranslate"><span class="pre">Polyhedron.homogenize()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.incidence_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.incidence_map</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.interior_point"><code class="docutils literal notranslate"><span class="pre">Polyhedron.interior_point()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.intersect"><code class="docutils literal notranslate"><span class="pre">Polyhedron.intersect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.inv_affine_map"><code class="docutils literal notranslate"><span class="pre">Polyhedron.inv_affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_adjacent"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_adjacent()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_bounded"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_bounded</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_empty"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_empty</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_full_dim"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_full_dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.is_neighbor"><code class="docutils literal notranslate"><span class="pre">Polyhedron.is_neighbor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.lift"><code class="docutils literal notranslate"><span class="pre">Polyhedron.lift()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minHrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minHrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minVrep"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minVrep()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.minkowski_sum"><code class="docutils literal notranslate"><span class="pre">Polyhedron.minkowski_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.plot"><code class="docutils literal notranslate"><span class="pre">Polyhedron.plot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.pontryagin_difference"><code class="docutils literal notranslate"><span class="pre">Polyhedron.pontryagin_difference()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.projection"><code class="docutils literal notranslate"><span class="pre">Polyhedron.projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.sample"><code class="docutils literal notranslate"><span class="pre">Polyhedron.sample()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.singleton"><code class="docutils literal notranslate"><span class="pre">Polyhedron.singleton()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.polyhedron.Polyhedron.volume"><code class="docutils literal notranslate"><span class="pre">Polyhedron.volume</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonotope">zonotope</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope"><code class="docutils literal notranslate"><span class="pre">Zonotope</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.G"><code class="docutils literal notranslate"><span class="pre">Zonotope.G</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.affine_map"><code class="docutils literal notranslate"><span class="pre">Zonotope.affine_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.c"><code class="docutils literal notranslate"><span class="pre">Zonotope.c</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.center"><code class="docutils literal notranslate"><span class="pre">Zonotope.center</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.dim"><code class="docutils literal notranslate"><span class="pre">Zonotope.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.generators"><code class="docutils literal notranslate"><span class="pre">Zonotope.generators</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.minkowski_sum"><code class="docutils literal notranslate"><span class="pre">Zonotope.minkowski_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.zonotope.Zonotope.projection"><code class="docutils literal notranslate"><span class="pre">Zonotope.projection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ellipsoid">ellipsoid</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid"><code class="docutils literal notranslate"><span class="pre">Ellipsoid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid.dim"><code class="docutils literal notranslate"><span class="pre">Ellipsoid.dim</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.geometry.convexset.Ellipsoid.plot"><code class="docutils literal notranslate"><span class="pre">Ellipsoid.plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fenglong Song, Colin Jones
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fenglong Song, Colin Jones.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

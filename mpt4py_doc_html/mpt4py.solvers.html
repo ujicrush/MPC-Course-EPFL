@@ -1,0 +1,920 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The solver package &#8212; mpt4py 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mpt4py.solvers';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The systems package" href="mpt4py.systems.html" />
+    <link rel="prev" title="The geometry package" href="mpt4py.geometry.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">mpt4py 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Navigation:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="contents.html">Contents</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.geometry.html">The geometry package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">The solver package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.systems.html">The systems package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpt4py.controllers.html">The controller package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/mpt4py.solvers.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The solver package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mpt4py.solvers.qp">QP and pQP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QP"><code class="docutils literal notranslate"><span class="pre">QP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.A"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.A</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.Ae"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.Ae</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.Ath"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.Ath</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.H"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.H</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.b"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.b</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.be"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.be</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.bth"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.bth</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.c"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.c</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.d"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.d</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.f"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.f</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.is_parametric"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.is_parametric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.lb"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.lb</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.m"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.m</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.me"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.me</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.n"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.n</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.num_eq"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.num_eq</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.num_ineq"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.num_ineq</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pB"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pB</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pC"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pC</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pE"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pF"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pF</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pY"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.problem_type"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.problem_type</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.qp2lcp"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.qp2lcp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.solve"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.solve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.ub"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.ub</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mpt4py.solvers.lcp">LCP and pLCP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LCP"><code class="docutils literal notranslate"><span class="pre">LCP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Ath"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.Ath</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.M"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.M</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Q"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.Q</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.bth"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.bth</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.d"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.d</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.is_parametric"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.is_parametric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.n"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.n</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.q"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.q</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.solve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve_for_param"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.solve_for_param()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.to_explicit"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.to_explicit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lcp-solver">LCP solver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp_solve"><code class="docutils literal notranslate"><span class="pre">lcp_solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plcp-solver">pLCP solver</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="the-solver-package">
+<h1>The solver package<a class="headerlink" href="#the-solver-package" title="Link to this heading">#</a></h1>
+<section id="module-mpt4py.solvers.qp">
+<span id="qp-and-pqp"></span><h2>QP and pQP<a class="headerlink" href="#module-mpt4py.solvers.qp" title="Link to this heading">#</a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QP">
+<span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.qp.</span></span><span class="sig-name descname"><span class="pre">QP</span></span><a class="headerlink" href="#mpt4py.solvers.qp.QP" title="Link to this definition">#</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mpt4py.solvers.qp.QuadraticProgram" title="mpt4py.solvers.qp.QuadraticProgram"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuadraticProgram</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.qp.</span></span><span class="sig-name descname"><span class="pre">QuadraticProgram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">H:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">f:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">c:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">pY:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">pF:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">pC:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">A:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">b:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">pB:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">Ae:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">be:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">pE:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">lb:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">ub:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">Ath:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">bth:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Defines a multi-parametric Quadratic Program (QP) of the form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\min\limits_x &amp;\quad \frac{1}{2} x^\top Hx + (F \theta+f)^\top x + \theta^\top Y \theta + C\theta + c, \\
+    \text{s.t.} &amp;\quad    A x \leq b  + B \theta,  \\
+            &amp; \quad A_e x = b_e + E \theta,  \\
+            &amp; \quad x_{lb}  \leq x \leq x_{ub},
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(H\)</span> is positive semi-definite.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt>H<span class="classifier">array-like, shape (n, n), optional</span></dt><dd><p>Quadratic cost matrix (None for LPs, defaults to zero matrix).</p>
+</dd>
+<dt>f<span class="classifier">array-like, shape (n,)</span></dt><dd><p>Linear cost vector.</p>
+</dd>
+<dt>A<span class="classifier">array-like, shape (m, n), optional</span></dt><dd><p>Inequality constraint matrix (None if absent).</p>
+</dd>
+<dt>b<span class="classifier">array-like, shape (m,), optional</span></dt><dd><p>Inequality constraint vector (None if absent).</p>
+</dd>
+<dt>Aeq<span class="classifier">array-like, shape (p, n), optional</span></dt><dd><p>Equality constraint matrix (None if absent).</p>
+</dd>
+<dt>beq<span class="classifier">array-like, shape (p,), optional</span></dt><dd><p>Equality constraint vector (None if absent).</p>
+</dd>
+<dt>lb<span class="classifier">array-like, shape (n,), optional</span></dt><dd><p>Lower bound on x (None if absent).</p>
+</dd>
+<dt>ub<span class="classifier">array-like, shape (n,), optional</span></dt><dd><p>Upper bound on x (None if absent).</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.A">
+<span class="sig-name descname"><span class="pre">A</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.A" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.Ae">
+<span class="sig-name descname"><span class="pre">Ae</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.Ae" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.Ath">
+<span class="sig-name descname"><span class="pre">Ath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.Ath" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.H">
+<span class="sig-name descname"><span class="pre">H</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.H" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.b">
+<span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.b" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.be">
+<span class="sig-name descname"><span class="pre">be</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.be" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.bth">
+<span class="sig-name descname"><span class="pre">bth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.bth" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.c">
+<span class="sig-name descname"><span class="pre">c</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.c" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.d">
+<span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.d" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.f">
+<span class="sig-name descname"><span class="pre">f</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.f" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.is_parametric">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_parametric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.is_parametric" title="Link to this definition">#</a></dt>
+<dd><p>Determine if the quadratic program is parametric or not.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.lb">
+<span class="sig-name descname"><span class="pre">lb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.lb" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.m">
+<span class="sig-name descname"><span class="pre">m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.m" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.me">
+<span class="sig-name descname"><span class="pre">me</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.me" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.n">
+<span class="sig-name descname"><span class="pre">n</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.n" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.num_eq">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_eq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.num_eq" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.num_ineq">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_ineq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.num_ineq" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.pB">
+<span class="sig-name descname"><span class="pre">pB</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.pB" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.pC">
+<span class="sig-name descname"><span class="pre">pC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.pC" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.pE">
+<span class="sig-name descname"><span class="pre">pE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.pE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.pF">
+<span class="sig-name descname"><span class="pre">pF</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.pF" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.pY">
+<span class="sig-name descname"><span class="pre">pY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.pY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.problem_type" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.qp2lcp">
+<span class="sig-name descname"><span class="pre">qp2lcp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#mpt4py.solvers.lcp.LinearComplementarityProblem" title="mpt4py.solvers.lcp.LinearComplementarityProblem"><span class="pre">LinearComplementarityProblem</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.qp2lcp" title="Link to this definition">#</a></dt>
+<dd><p>Transform LP/QP into LCP formulation, or transform pLP/pQP into pLCP formulation.</p>
+<p>The original QP is in the following form:</p>
+<div class="math notranslate nohighlight" id="equation-original-qp">
+<span class="eqno">(1)<a class="headerlink" href="#equation-original-qp" title="Link to this equation">#</a></span>\[\begin{split}\begin{aligned}
+\min\limits_x &amp; \quad \frac{1}{2}x^\top Hx + (F \theta + f)^\top x \\
+    \text{s.t.} &amp; \quad Ax \leq b + B\theta \\
+            &amp; \quad A_e x = b_e + E\theta
+\end{aligned}\end{split}\]</div>
+<p>There are 3 steps:</p>
+<ol class="arabic">
+<li><p>Eliminate equality constraints in <a class="reference internal" href="#equation-original-qp">(1)</a>.</p>
+<blockquote>
+<div><p>To reduce the optimization problem to a simpler form, the system of linear equations
+<span class="math notranslate nohighlight">\(A_e x = b_e + E\theta\)</span> must be consistent, meaning no linearly dependent rows exist,
+and the number of equalities <span class="math notranslate nohighlight">\(m_e\)</span> is strictly less than the number of variables <span class="math notranslate nohighlight">\(n\)</span>, i.e., <span class="math notranslate nohighlight">\(m_e &lt; n\)</span>.</p>
+<p>The principle is based on factorizing the equality constraints <span class="math notranslate nohighlight">\(A_e x = b_e + E\theta\)</span> into
+basic variables <span class="math notranslate nohighlight">\(x_B\)</span> and non-basic variables <span class="math notranslate nohighlight">\(x_N\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[A_{e,B} x_B + A_{e,N}  x_N = b_e + E\theta,\]</div>
+<p>where the index sets <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(N\)</span> denote the columns for the factored system.
+The factored submatrix <span class="math notranslate nohighlight">\(A_{e,B}\)</span> must be invertible to express basic variables
+as a function of non-basic variables:</p>
+<div class="math notranslate nohighlight">
+\[x_{B} = - A_{e,B}^{-1} A_{e,N} x_N + A_{e,B}^{-1} b_e + A_{e,B}^{-1} E\theta.\]</div>
+<p>Using the substitutions:</p>
+<div class="math notranslate nohighlight">
+\[C = - A_{e,B}^{-1} A_{e,N},
+D_1 = A_{e,B}^{-1} b_e,
+D_2 = A_{e,B}^{-1} E,\]</div>
+<p>the relation between basic and non-basic variables simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[x_B = C x_N + D_1 + D_2 \theta.\]</div>
+<p>The original QP can be expressed with only non-basic variables <span class="math notranslate nohighlight">\(x_N\)</span> as follows:</p>
+<div class="math notranslate nohighlight" id="equation-qp-no-equality">
+<span class="eqno">(2)<a class="headerlink" href="#equation-qp-no-equality" title="Link to this equation">#</a></span>\[\begin{split}\begin{aligned}
+\min\limits_{x_N} &amp;\quad \frac{1}{2}x_N \tilde{H} x_N + (\tilde{F} \theta + \tilde{f})^\top x_N \\
+    \text{s.t.} &amp; \quad \tilde{A} x_N \leq \tilde{b} + \tilde{B}\theta
+\end{aligned}\end{split}\]</div>
+<p>with the following definitions (<span class="math notranslate nohighlight">\(A_B\)</span> and <span class="math notranslate nohighlight">\(A_N\)</span> are the columns of <span class="math notranslate nohighlight">\(A\)</span> corresponding to <span class="math notranslate nohighlight">\(x_B\)</span> and <span class="math notranslate nohighlight">\(x_N\)</span> respectively):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \tilde{H} = C^\top H_{BB} C + C^\top H_{BN} + H_{NB}C + H_{NN}, \\
+    &amp; \tilde{f} = \frac{1}{2} C^\top \left(H_{BB}+H_{BB}^\top \right) D_1 + \frac{1}{2} \left(H_{BN}^\top + H_{NB}\right) D_1 + C^\top f_{B} + f_{N},  \\
+    &amp; \tilde{F} = \frac{1}{2} C^\top \left(H_{BB}+H_{BB}^\top \right) D_2 + \frac{1}{2} \left(H_{BN}^\top + H_{NB}\right) D_2 + C^\top F_{B} + F_{N},  \\
+    &amp; \tilde{A} = A_B C + A_N, \\
+    &amp; \tilde{b} = b - A_B D_1, \\
+    &amp; \tilde{B} = B - A_B D_2. \\
+\end{aligned}\end{split}\]</div>
+</div></blockquote>
+</li>
+<li><p>Transform the QP with only inequalities <a class="reference internal" href="#equation-qp-no-equality">(2)</a> into affine and non-negative form:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight" id="equation-qp-non-negative">
+<span class="eqno">(3)<a class="headerlink" href="#equation-qp-non-negative" title="Link to this equation">#</a></span>\[\begin{split}\begin{aligned}
+\min\limits_y &amp; \quad \frac{1}{2}y^\top \hat{H} y + (\hat{F} \theta + \hat{f})^\top y \\
+    \text{s.t.} &amp; \quad  \hat{A}y \geq \hat{b} + \hat{B}\theta \\
+        &amp;\quad  y \geq 0
+\end{aligned}\end{split}\]</div>
+<p><strong>Case 1</strong>: if <span class="math notranslate nohighlight">\(\tilde{A}\)</span> is not full row rank, factorize it row-wise into <span class="math notranslate nohighlight">\(\tilde{A}_B\)</span> and <span class="math notranslate nohighlight">\(\tilde{A}_N\)</span> where <span class="math notranslate nohighlight">\(\tilde{A}_B\)</span> is a square invertible matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    -\tilde{A}_B x_N &amp;= -\tilde{b}_B - \tilde{B}_B \theta + y \\
+    -\tilde{A}_N x_N &amp;\geq -\tilde{b}_N - \tilde{B}_N \theta \\
+    y &amp;\geq 0
+\end{aligned}\end{split}\]</div>
+<p>Apply substitution <span class="math notranslate nohighlight">\(x_N = \tilde{A}_B^{-1} \left( -y + \tilde{b}_B + \tilde{B}_B \theta \right)\)</span> into <a class="reference internal" href="#equation-qp-no-equality">(2)</a>,
+we can express the problem into the form of <a class="reference internal" href="#equation-qp-non-negative">(3)</a> with:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \hat{H} = \tilde{A}_B^{-\top} \tilde{H} \tilde{A}_B^{-1}, &amp;
+    &amp; \hat{F} = - \hat{H} \tilde{B}_B - \tilde{A}_B^{-\top} \tilde{F}, &amp;
+    &amp; \hat{f} = - \hat{H} \tilde{b}_B - \tilde{A}_B^{-\top} \tilde{f}, \\
+    &amp; \hat{A} = \tilde{A}_N \tilde{A}_B^{-1}, &amp;
+    &amp; \hat{b} = \tilde{A}_N \tilde{A}_B^{-1} \tilde{b}_B - \tilde{b}_N, &amp;
+    &amp; \hat{B} = \tilde{A}_N \tilde{A}_B^{-1} \tilde{B}_B - \tilde{B}_N.
+\end{aligned}\end{split}\]</div>
+<p><strong>Case 2</strong>: the <span class="math notranslate nohighlight">\(x_N\)</span> can be expressed as the difference of two positive vectors,
+i.e., <span class="math notranslate nohighlight">\(x_N = x_N^+ - x_N^-\)</span> with <span class="math notranslate nohighlight">\(x_N^+\geq 0, ~x_N^-\geq 0\)</span>.
+By denoting <span class="math notranslate nohighlight">\(y\)</span> as their concatenation, we get the corresponding parts in <a class="reference internal" href="#equation-qp-non-negative">(3)</a>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \hat{H} = \begin{bmatrix} \tilde{H} &amp; -\tilde{H} \\ \tilde{H} &amp; \tilde{H} \end{bmatrix}, &amp;
+    &amp; \hat{F} = \begin{bmatrix} \tilde{F} &amp; -\tilde{F} \end{bmatrix}, &amp;
+    &amp; \hat{f} = \begin{bmatrix} \tilde{f} &amp; -\tilde{f} \end{bmatrix}, \\
+    &amp; \hat{A} = \begin{bmatrix} -\tilde{A} &amp; \tilde{A} \end{bmatrix}, &amp;
+    &amp; \hat{b} = -\tilde{b}, &amp;
+    &amp; \hat{B} = -\tilde{B}.
+\end{aligned}\end{split}\]</div>
+</div></blockquote>
+</li>
+<li><p>Transform to LCP.</p>
+<blockquote>
+<div><p>By introducing slack variables <span class="math notranslate nohighlight">\(s = \hat{A}y-\hat{b}-\hat{B}\theta\)</span>, the KKT condition of <a class="reference internal" href="#equation-qp-non-negative">(3)</a> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \hat{H}y + \hat{F}\theta + \hat{f} -\hat{A}^\top\lambda - \nu = 0 &amp; \text{stationary point} \\
+    &amp; \lambda^\top s = \nu^\top y = 0 &amp; \text{complementarity} \\
+    &amp; s, y\geq 0  &amp; \text{primal feasibility} \\
+    &amp; \lambda, \nu \geq 0  &amp; \text{dual feasibility}
+\end{aligned}\end{split}\]</div>
+<p>The corresponding LCP is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix} v \\ s \end{bmatrix} - \begin{bmatrix} \hat{H} &amp; -\hat{A}^\top \\ \hat{A} &amp; 0 \end{bmatrix} \begin{bmatrix} y \\ \lambda \end{bmatrix}
+= \begin{bmatrix} \hat{F} \\ -\hat{B} \end{bmatrix} \theta + \begin{bmatrix} \hat{f} \\ -\hat{b} \end{bmatrix}\end{split}\]</div>
+</div></blockquote>
+</li>
+</ol>
+<p>The relationship between the solution of LCP and original QP is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; x = P \begin{bmatrix} x_B \\ x_N \end{bmatrix} = P \left( \begin{bmatrix} C \\ I \end{bmatrix} x_N + \begin{bmatrix} D_1 \\ 0 \end{bmatrix} + \begin{bmatrix} D_2 \\ 0 \end{bmatrix}\theta \right),  \\
+    &amp; x_N = \begin{bmatrix} I &amp; -I \end{bmatrix} y, \\
+    &amp; y = \begin{bmatrix} I &amp; 0 \end{bmatrix} z,
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(P\)</span> is a proper permutation matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.solve" title="Link to this definition">#</a></dt>
+<dd><p>Solve the QP/pQP.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.qp.QuadraticProgram.ub">
+<span class="sig-name descname"><span class="pre">ub</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.qp.QuadraticProgram.ub" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-mpt4py.solvers.lcp">
+<span id="lcp-and-plcp"></span><h2>LCP and pLCP<a class="headerlink" href="#module-mpt4py.solvers.lcp" title="Link to this heading">#</a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LCP">
+<span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.lcp.</span></span><span class="sig-name descname"><span class="pre">LCP</span></span><a class="headerlink" href="#mpt4py.solvers.lcp.LCP" title="Link to this definition">#</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mpt4py.solvers.lcp.LinearComplementarityProblem" title="mpt4py.solvers.lcp.LinearComplementarityProblem"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearComplementarityProblem</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.lcp.</span></span><span class="sig-name descname"><span class="pre">LinearComplementarityProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">M:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">q:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">Q:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">Ath:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">bth:</span> <span class="pre">~numpy.ndarray[tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">~numpy.dtype[~numpy.float64]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Encapsulates data and solutions for LCP and pLCP.</p>
+<div class="math notranslate nohighlight">
+\[w - Mz = q + Q\theta, w,z \geq 0, w^\top z = 0\]</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.Ath">
+<span class="sig-name descname"><span class="pre">Ath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Ath" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.M">
+<span class="sig-name descname"><span class="pre">M</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.M" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.Q">
+<span class="sig-name descname"><span class="pre">Q</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Q" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.bth">
+<span class="sig-name descname"><span class="pre">bth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.bth" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.d">
+<span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.d" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.is_parametric">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_parametric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.is_parametric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.n">
+<span class="sig-name descname"><span class="pre">n</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.n" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.q">
+<span class="sig-name descname"><span class="pre">q</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.q" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LcpSolution</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PlcpSolution</span></span></span><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve" title="Link to this definition">#</a></dt>
+<dd><p>Solve the LCP / pLCP</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.solve_for_param">
+<span class="sig-name descname"><span class="pre">solve_for_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LcpSolution</span></span></span><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve_for_param" title="Link to this definition">#</a></dt>
+<dd><p>Solve the LCP / pLCP for a specific parameter value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp.LinearComplementarityProblem.to_explicit">
+<span class="sig-name descname"><span class="pre">to_explicit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.to_explicit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="lcp-solver">
+<h2>LCP solver<a class="headerlink" href="#lcp-solver" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mpt4py.solvers.lcp_solve">
+<span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.</span></span><span class="sig-name descname"><span class="pre">lcp_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'graves'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_pivots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tolerances['zero']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LcpSolution</span></span></span><a class="headerlink" href="#mpt4py.solvers.lcp_solve" title="Link to this definition">#</a></dt>
+<dd><p>Solve a Linear Complementarity Problem (LCP)</p>
+</dd></dl>
+
+</section>
+<section id="plcp-solver">
+<h2>pLCP solver<a class="headerlink" href="#plcp-solver" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">mpt4py.solvers.</span></span><span class="sig-name descname"><span class="pre">plcp_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'lemke'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tolerances['zero']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lex_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_pivots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PlcpSolution</span></span></span></dt>
+<dd><p>Solve a Parametric Linear Complementarity Problem (pLCP).</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mpt4py.geometry.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The geometry package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mpt4py.systems.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The systems package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mpt4py.solvers.qp">QP and pQP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QP"><code class="docutils literal notranslate"><span class="pre">QP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.A"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.A</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.Ae"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.Ae</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.Ath"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.Ath</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.H"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.H</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.b"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.b</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.be"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.be</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.bth"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.bth</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.c"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.c</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.d"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.d</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.f"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.f</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.is_parametric"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.is_parametric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.lb"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.lb</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.m"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.m</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.me"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.me</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.n"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.n</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.num_eq"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.num_eq</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.num_ineq"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.num_ineq</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pB"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pB</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pC"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pC</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pE"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pF"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pF</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.pY"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.pY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.problem_type"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.problem_type</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.qp2lcp"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.qp2lcp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.solve"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.solve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.qp.QuadraticProgram.ub"><code class="docutils literal notranslate"><span class="pre">QuadraticProgram.ub</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mpt4py.solvers.lcp">LCP and pLCP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LCP"><code class="docutils literal notranslate"><span class="pre">LCP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Ath"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.Ath</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.M"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.M</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.Q"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.Q</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.bth"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.bth</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.d"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.d</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.is_parametric"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.is_parametric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.n"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.n</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.q"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.q</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.solve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.solve_for_param"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.solve_for_param()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp.LinearComplementarityProblem.to_explicit"><code class="docutils literal notranslate"><span class="pre">LinearComplementarityProblem.to_explicit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lcp-solver">LCP solver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mpt4py.solvers.lcp_solve"><code class="docutils literal notranslate"><span class="pre">lcp_solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plcp-solver">pLCP solver</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fenglong Song, Colin Jones
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fenglong Song, Colin Jones.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

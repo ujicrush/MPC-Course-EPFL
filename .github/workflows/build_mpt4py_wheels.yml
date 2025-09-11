@@ -67,7 +67,7 @@ jobs:
         run: uv python install 3.12
 
       - name: install dependencies
-        run: uv venv && uv pip install -e . --group docs
+        run: uv venv && uv pip install -e . --group docs --find-links https://github.com/PREDICT-EPFL/MPC-Course-EPFL/releases/expanded_assets/pycddlib_wheels
 
       - name: build docs
         run: uv run sphinx-apidoc -o docs/source . && uv run sphinx-build -b html docs/source docs/build

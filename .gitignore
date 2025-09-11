@@ -80,3 +80,7 @@ pip-log.txt
 *.swp
 *.lock
 !.gitignore
+
+# ignore all student notebooks, but not the ones we add
+*.ipynb
+!tutorial.ipynb

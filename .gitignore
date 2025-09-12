@@ -84,3 +84,11 @@ pip-log.txt
 # ignore all student notebooks, but not the ones we add
 *.ipynb
 !tutorial.ipynb
+!programming_exercises/exercise1_unconstrained_control/ex1_unconstrained_control.ipynb
+!programming_exercises/exercise1_unconstrained_control/ex1_sol_unconstrained_control.ipynb
+!programming_exercises/exercise2_optimization/ex2_optimization.ipynb
+!programming_exercises/exercise2_optimization/ex2_sol_optimization.ipynb
+!programming_exercises/exercise3_invariance/ex3_invariance.ipynb
+!programming_exercises/exercise3_invariance/ex3_sol_invariance.ipynb
+!programming_exercises/exercise4_mpc/ex4_mpc.ipynb
+!programming_exercises/exercise4_mpc/ex4_sol_mpc.ipynb

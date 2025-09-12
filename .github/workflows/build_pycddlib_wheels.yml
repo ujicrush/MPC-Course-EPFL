@@ -43,7 +43,7 @@ jobs:
           CIBW_ENVIRONMENT: CFLAGS="-I/vcpkg/installed/x64-linux/include" LDFLAGS="-L/vcpkg/installed/x64-linux/lib"
 
       - name: Build wheel (Linux arm64)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-22.04-arm'
         run: source .venv/bin/activate && python -m cibuildwheel --output-dir dist
         env:
           CIBW_PLATFORM: linux

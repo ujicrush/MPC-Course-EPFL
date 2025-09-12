@@ -40,3 +40,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r locked-requirements.txt --only-binary=pycddlib,mpt4py
+
+      - name: test env
+        run: python -c 'import mpt4py'

@@ -30,15 +30,16 @@ jobs:
         run: uv python install 3.12
 
       - name: Install Python dependencies
-        run: uv venv && uv pip install cibuildwheel auditwheel
-
-      - name: Install dependencies (Linux)
-        if: matrix.os == 'ubuntu-22.04'
-        run: sudo apt-get update && sudo apt-get install -y libcdd-dev libgmp-dev
+        run: uv venv && uv pip install cibuildwheel
 
       - name: Build wheel (Linux)
         if: matrix.os == 'ubuntu-22.04'
-        run: source .venv/bin/activate && uv build --wheel -o dist_uv && python -m auditwheel repair "$(find dist_uv/ -name "*.whl" -type f | head -1)" -w dist
+        run: source .venv/bin/activate && python -m cibuildwheel --output-dir dist
+        env:
+          CIBW_PLATFORM: linux
+          CIBW_BUILD: cp312-*
+          CIBW_BEFORE_ALL: yum install -y curl zip unzip tar && git clone https://github.com/Microsoft/vcpkg.git && ./vcpkg/bootstrap-vcpkg.sh && ./vcpkg/vcpkg install cddlib
+          CIBW_ENVIRONMENT: CFLAGS="-I./vcpkg/installed/x64-linux/include" LDFLAGS="-L./vcpkg/installed/x64-linux/lib"
 
       - name: Install dependencies (macOS)
         if: matrix.os == 'macos-13' || matrix.os == 'macos-14'

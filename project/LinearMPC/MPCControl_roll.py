@@ -34,9 +34,9 @@ class MPCControl_roll(MPCControl_base):
 
         self.objective = 0
         for k in range(self.N):
-            self.objective += cp.quad_form(self.X[:, k] - self.x_ref_param, Q)
-            self.objective += cp.quad_form(self.U[:, k] - self.u_ref_param, R)
-        self.objective += cp.quad_form(self.X[:, self.N] - self.x_ref_param, P)
+            self.objective += cp.quad_form(self.X[:, k], Q)
+            self.objective += cp.quad_form(self.U[:, k], R)
+        self.objective += cp.quad_form(self.X[:, N], P)
 
         self.ocp = cp.Problem(cp.Minimize(self.objective), self.constraints)
         # YOUR CODE HERE

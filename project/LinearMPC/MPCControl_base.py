@@ -63,8 +63,6 @@ class MPCControl_base:
         self.U = cp.Variable((nu, N), name="U")
 
         self.x0_param = cp.Parameter(nx, name="x0")
-        self.x_ref_param = cp.Parameter(nx, name="x_ref")
-        self.u_ref_param = cp.Parameter(nu, name="u_ref")
 
         constraints = []
         constraints.append(self.X[:, 0] == self.x0_param)
@@ -94,33 +92,23 @@ class MPCControl_base:
         else:
             x_sub = x0
 
-        if x_target is None:
-            x_ref = np.zeros(self.nx)
-        else:
-            if x_target.shape[0] != self.nx:
-                x_ref = x_target[self.x_ids]
-            else:
-                x_ref = x_target
-
-        if u_target is None:
-            u_ref = np.zeros(self.nu)
-        else:
-            u_ref = u_target
-
-        self.x0_param.value = x_sub
-        self.x_ref_param.value = x_ref
-        self.u_ref_param.value = u_ref
+        delta_x0 = x_sub - self.xs
+        self.x0_param.value = delta_x0
 
         self.ocp.solve(solver=cp.GUROBI, warm_start=True)
 
         if self.ocp.status != cp.OPTIMAL:
-            u0 = np.zeros(self.nu)
-            x_traj = np.tile(x_sub.reshape(-1, 1), (1, self.N + 1))
-            u_traj = np.zeros((self.nu, self.N))
+            delta_u0 = np.zeros(self.nu)
+            delta_x_traj = np.tile(delta_x0.reshape(-1, 1), (1, self.N + 1))
+            delta_u_traj = np.zeros((self.nu, self.N))
         else:
-            u0 = self.U[:, 0].value
-            x_traj = self.X.value
-            u_traj = self.U.value
+            delta_u0 = self.U[:, 0].value
+            delta_x_traj = self.X.value
+            delta_u_traj = self.U.value
+
+        u0 = delta_u0 + self.us
+        u_traj = delta_u_traj + self.us.reshape(-1, 1)
+        x_traj = delta_x_traj + self.xs.reshape(-1, 1)
 
         # YOUR CODE HERE
         #################################################

@@ -354,7 +354,9 @@ class Rocket(RocketBase):
                 self.linearize(self.xs, self.us)
             for k in range(N):
                 # Euler integration
+                print(f"Simulating time {T[k]:.2f}", end=':')
                 X[:, k+1] = Rocket.linear_integrate_step(self.A_ss, self.xs, self.B_ss, self.us, X[:, k], U[:, k], self.Ts)
+                print('', end='\n')
         else:
             if method =='nonlinear_real':
                 current_rocket = perturb_rocket(self)
@@ -363,15 +365,17 @@ class Rocket(RocketBase):
                 current_rocket = copy.deepcopy(self)
             for k in range(N):
                 # Euler integration
+                print(f"Simulating time {T[k]:.2f}", end=':')
                 U[:, k] = current_rocket.fuel_dynamics(U[:, k], self.Ts)
                 X[:, k+1] = Rocket.integrate_step(current_rocket.f, X[:, k], U[:, k], self.Ts)
+                print('', end='\n')
             
         return T, X[:,:-1], U
     
     
     def simulate_step(self, x0: np.ndarray, Ts: float, u0: np.ndarray, method: str='nonlinear') -> np.ndarray:
-        if ~constraint_check(x0, u0):
-            raise ValueError("State or input constraints violated")
+        if constraint_check(self, x0, u0):
+            raise ValueError("Constraints violation detected, terminating...")
 
         u0 = self.fuel_dynamics(u0, Ts)
         if method == 'linear':
@@ -416,14 +420,15 @@ class Rocket(RocketBase):
 
         # Closed-loop simulation
         for k in range(N_cl):
+            print(f"Simulating time {t_cl[k]:.2f}", end=': ')
             if pos_control is not None:
                 x_target[6:9, k] = pos_control.get_u(x_cl[9:12, k])
             u_cl[:, k], x_ol[..., k], u_ol[..., k], t_ol[..., k] = mpc.get_u(t_cl[k], x_cl[:, k], x_target=x_target[:, k], u_target=u_target)
-            u_cl[:, k] = current_rocket.fuel_dynamics(u_cl[:, k], self.Ts)
             x_cl[:, k+1] = current_rocket.simulate_step(x_cl[:, k], self.Ts, u_cl[:, k], method=method)
             mpc.estimate_parameters(x_cl[:, k:k+2], u_cl[:, k:k+1])
             t_cl[k+1] = t_cl[k] + self.Ts
-            # print(f"Simulating... {k+1}/{N_cl} steps, estimated disturbance: {mpc.mpc_z.d.value}", end='\r')
+            print('', end='\n')
+
 
         return t_cl, x_cl, u_cl, t_ol, x_ol, u_ol, x_target
 
@@ -432,8 +437,10 @@ class Rocket(RocketBase):
         if self.fuel_consumption < self.mass/2:
             self.fuel_consumption += self.fuel_rate * Ts * u[2] / 100
         else:
+            raise ValueError("Fuel exhausted")
             u[2] = 0.0; u[3] = 0.0
-        
+        if self.fuel_consumption > 0:
+            print(f"Fuel left: {float(self.mass/2 - self.fuel_consumption):.2f} kg", end=', ')
         return u
 
 
@@ -579,7 +586,7 @@ def perturb_rocket(rocket, seed: int | None = 1):
     return r
 
 
-def constraint_check(x: np.ndarray, u: np.ndarray) -> bool:
+def constraint_check(rocket, x: np.ndarray, u: np.ndarray) -> bool:
     """Check if state x amd input u satisfy constraints"""
     LBU = np.array([-np.deg2rad(15), -np.deg2rad(15), 40.0, -20.0])  # [dR, dP, Pavg, Pdiff]
     UBU = np.array([ np.deg2rad(15),  np.deg2rad(15), 80.0,  20.0])  # [dR, dP, Pavg, Pdiff]
@@ -587,12 +594,29 @@ def constraint_check(x: np.ndarray, u: np.ndarray) -> bool:
     LBX = np.array([-np.inf, -np.inf, -np.inf,
                     -np.deg2rad(10), -np.deg2rad(10), -np.inf,
                     -np.inf, -np.inf, -np.inf,
-                    -np.inf, -np.inf, 0.0])  # [wx, wy, wz, alpha, beta, gamma, vx, vy, vz, x, y, z]
+                    -np.inf, -np.inf, 0.0]) # [wx, wy, wz, alpha, beta, gamma, vx, vy, vz, x, y, z]
     UBX = np.array([np.inf,  np.inf,  np.inf,
                     np.deg2rad(10),  np.deg2rad(10),  np.inf,
                     np.inf,  np.inf,  np.inf,
-                    np.inf,  np.inf, np.inf])  # [wx, wy
-    return np.all(u >= LBU-1e-5) and np.all(u <= UBU+1e-5) and np.all(x >= LBX-1e-5) and np.all(x <= UBX+1e-5)
+                    np.inf,  np.inf, np.inf]) # [wx, wy, wz, alpha, beta, gamma, vx, vy, vz, x, y, z]
+    
+    terminate = False
+    if np.any(u < LBU-1e-5):
+        for index in np.where(u < LBU-1e-5)[0]:
+            print(f"Input {rocket.sys['InputName'][index]} violation: {u[index]:.2f} < {LBU[index]:.2f}", end=', ')
+        terminate = True
+    if np.any(u > UBU+1e-5):
+        for index in np.where(u > UBU+1e-5)[0]:
+            print(f"Input {rocket.sys['InputName'][index]} violation: {u[index]:.2f} > {UBU[index]:.2f}", end=', ')
+        terminate = True
+    if np.any(x < LBX-1e-5):
+        for index in np.where(x < LBX-1e-5)[0]:
+            print(f"State {rocket.sys['StateName'][index]} violation: {x[index]:.2f} < {LBX[index]:.2f}", end=', ')
+    if np.any(x > UBX+1e-5):
+        for index in np.where(x > UBX+1e-5)[0]:
+            print(f"State {rocket.sys['StateName'][index]} violation: {x[index]:.2f} > {UBX[index]:.2f}", end=', ')
+
+    return terminate
 
 
 class LTISys:

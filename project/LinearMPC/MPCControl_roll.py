@@ -24,9 +24,9 @@ class MPCControl_roll(MPCControl_base):
         self.Q = Q
         self.R = R
 
-        K, P, _ = dlqr(A, B, Q, R)
+        K, Qf, _ = dlqr(A, B, Q, R)
         self.K = -K
-        self.P = P
+        self.Qf = Qf
 
         M = np.array([[1.0],
                     [-1.0]])
@@ -80,7 +80,7 @@ class MPCControl_roll(MPCControl_base):
             return lower, upper
 
         lower, upper = print_interval_from_H(Ff, ff, name="roll_sub_state")
-        
+
         self.constraints +=[
             self.U <= 20,
             self.U >= -20,
@@ -91,7 +91,7 @@ class MPCControl_roll(MPCControl_base):
         for k in range(self.N):
             self.objective += cp.quad_form(self.X[:, k], Q)
             self.objective += cp.quad_form(self.U[:, k], R)
-        self.objective += cp.quad_form(self.X[:, N], P)
+        self.objective += cp.quad_form(self.X[:, N], Qf)
 
         self.ocp = cp.Problem(cp.Minimize(self.objective), self.constraints)
         # YOUR CODE HERE

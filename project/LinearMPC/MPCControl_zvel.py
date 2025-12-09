@@ -28,9 +28,9 @@ class MPCControl_zvel(MPCControl_base):
         self.Q = Q
         self.R = R
 
-        K, P, _ = dlqr(A, B, Q, R)
+        K, Qf, _ = dlqr(A, B, Q, R)
         self.K = -K
-        self.P = P
+        self.Qf = Qf
 
         us = self.us[0]
         M = np.array([[1.0],
@@ -96,7 +96,7 @@ class MPCControl_zvel(MPCControl_base):
         for k in range(self.N):
             self.objective += cp.quad_form(self.X[:, k], Q)
             self.objective += cp.quad_form(self.U[:, k], R)
-        self.objective += cp.quad_form(self.X[:, N], P)
+        self.objective += cp.quad_form(self.X[:, N], Qf)
 
         self.ocp = cp.Problem(cp.Minimize(self.objective), self.constraints)
         # YOUR CODE HERE

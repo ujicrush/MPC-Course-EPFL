@@ -1,6 +1,7 @@
 import cvxpy as cp
 import numpy as np
 from control import dlqr
+from mpt4py import Polyhedron
 
 from .MPCControl_base import MPCControl_base
 
@@ -31,9 +32,64 @@ class MPCControl_zvel(MPCControl_base):
         self.K = -K
         self.P = P
 
+        us = self.us[0]
+        M = np.array([[1.0],
+                      [-1.0]])
+        m = np.array([80.0 - us,
+                      -40.0 + us])
+        
+        F_term = M @ self.K        # shape (2, 1)
+        f_term = m                 # shape (2,)
+
+        Xf = Polyhedron.from_Hrep(F_term, f_term)
+        Acl = A + B @ self.K
+
+        while True:
+            Xf_prev = Xf
+            F_O, f_O = Xf.A, Xf.b
+            pre = Polyhedron.from_Hrep(F_O @ Acl, f_O)
+            Xf = Xf.intersect(pre)
+            # Xf.minHrep(True)
+            # _ = Xf.Vrep 
+            if Xf == Xf_prev:
+                break
+
+        Ff, ff = Xf.A, Xf.b
+
+        def print_interval_from_H(F, f, name="x"):
+            F = np.asarray(F).reshape(-1)
+            f = np.asarray(f).reshape(-1)
+
+            lowers = []
+            uppers = []
+
+            for a_i, b_i in zip(F, f):
+                if np.isclose(a_i, 0.0):
+                    if b_i < -1e-9:
+                        print("Infeasible constraint: 0 * x <= b but b < 0")
+                    continue
+
+                if a_i > 0:
+                    # a x <= b  → x <= b/a
+                    uppers.append(b_i / a_i)
+                else:
+                    # a x <= b  → x >= b/a  (a<0)
+                    lowers.append(b_i / a_i)
+
+            lower = max(lowers) if lowers else -np.inf
+            upper = min(uppers) if uppers else np.inf
+
+            print(f"Terminal invariant set for {name}:")
+            print(f"{lower:.4f} <= {name} <= {upper:.4f}")
+
+            return lower, upper
+
+        lower, upper = print_interval_from_H(Ff, ff, name="z_sub_state")
+
         self.constraints +=[
-            self.U <= 80 - self.us[0],
-            self.U >= 40 - self.us[0]
+            self.U <= 80 - us,
+            self.U >= 40 - us,
+            Ff @ self.X[:, self.N] <= ff
         ]
 
         self.objective = 0

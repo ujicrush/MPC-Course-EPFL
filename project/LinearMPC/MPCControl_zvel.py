@@ -23,7 +23,7 @@ class MPCControl_zvel(MPCControl_base):
         nx, nu, N = self.nx, self.nu, self.N
 
         Q = 100 * np.eye(nx)
-        R = 3.5 * np.eye(nu)
+        R = 1.5 * np.eye(nu)
 
         self.Q = Q
         self.R = R

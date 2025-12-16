@@ -20,9 +20,10 @@ class MPCControl_xvel(MPCControl_base):
         nx, nu, N = self.nx, self.nu, self.N
 
         Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 10
-        Q[1,1] *= 80
-        R = 100 * np.eye(nu)
+        Q[0,0] *= 7000
+        Q[1,1] *= 20
+        Q[2,2] *= 1
+        R = 10 * np.eye(nu)
 
         self.Q = Q
         self.R = R

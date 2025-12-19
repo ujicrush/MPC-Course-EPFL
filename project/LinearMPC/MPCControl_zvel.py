@@ -84,7 +84,7 @@ class MPCControl_zvel(MPCControl_base):
 
             return lower, upper
 
-        lower, upper = print_interval_from_H(Ff, ff, name="z_sub_state")
+        lower, upper = print_interval_from_H(Ff, ff, name="v_z")
 
         self.constraints +=[
             self.U <= 80 - us,

@@ -36,7 +36,7 @@ class MPCControl_z(MPCControl_base):
         return u0, x_traj, u_traj
 
     def setup_estimator(self):
-        # FOR PART 5 OF THE PROJECT
+        # FOR PART 6 OF THE PROJECT
         ##################################################
         # YOUR CODE HERE
 
@@ -47,7 +47,7 @@ class MPCControl_z(MPCControl_base):
         ##################################################
 
     def update_estimator(self, x_data: np.ndarray, u_data: np.ndarray) -> None:
-        # FOR PART 5 OF THE PROJECT
+        # FOR PART 6 OF THE PROJECT
         ##################################################
         # YOUR CODE HERE
         self.d_estimate = ...

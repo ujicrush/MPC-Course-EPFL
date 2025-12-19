@@ -2,6 +2,7 @@ import cvxpy as cp
 import numpy as np
 from control import dlqr
 from mpt4py import Polyhedron
+import matplotlib.pyplot as plt
 
 from .MPCControl_base import MPCControl_base
 
@@ -18,7 +19,9 @@ class MPCControl_roll(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        Q = 50 * np.eye(nx)
+        Q = 0.01 * np.eye(nx)
+        Q[0,0] *= 100
+        Q[1,1] *= 10
         R = 0.1 * np.eye(nu)
 
         self.Q = Q
@@ -51,35 +54,17 @@ class MPCControl_roll(MPCControl_base):
 
         Ff, ff = Xf.A, Xf.b
 
-        def print_interval_from_H(F, f, name="x"):
-            F = np.asarray(F).reshape(-1)
-            f = np.asarray(f).reshape(-1)
+        fig, ax = plt.subplots(1, 1, figsize=(5, 4))
 
-            lowers = []
-            uppers = []
+        proj01 = Xf.projection(dims=(0, 1))
+        proj01.plot(ax)
 
-            for a_i, b_i in zip(F, f):
-                if np.isclose(a_i, 0.0):
-                    if b_i < -1e-9:
-                        print("Infeasible constraint: 0 * x <= b but b < 0")
-                    continue
+        ax.set_title("Terminal invariant set for roll subsystem", fontsize=14)
+        ax.set_xlabel("ω_z")
+        ax.set_ylabel("γ")
 
-                if a_i > 0:
-                    # a x <= b  → x <= b/a
-                    uppers.append(b_i / a_i)
-                else:
-                    # a x <= b  → x >= b/a  (a<0)
-                    lowers.append(b_i / a_i)
-
-            lower = max(lowers) if lowers else -np.inf
-            upper = min(uppers) if uppers else np.inf
-
-            print(f"Terminal invariant set for {name}:")
-            print(f"{lower:.4f} <= {name} <= {upper:.4f}")
-
-            return lower, upper
-
-        lower, upper = print_interval_from_H(Ff, ff, name="roll_sub_state")
+        plt.tight_layout()
+        plt.show()
 
         self.constraints +=[
             self.U <= 20,

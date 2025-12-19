@@ -19,6 +19,19 @@ class MPCControl_roll(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
+        # # for deliverable 3.1-3.2
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 5000
+        # Q[1,1] *= 5000
+        # R = 0.1 * np.eye(nu)
+
+        # for deliverable 3.3
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 5000
+        # Q[1,1] *= 10000
+        # R = 0.1 * np.eye(nu)   
+
+        # for deliverable 4.1
         Q = 0.01 * np.eye(nx)
         Q[0,0] *= 100
         Q[1,1] *= 10

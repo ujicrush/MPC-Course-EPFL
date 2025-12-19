@@ -19,6 +19,21 @@ class MPCControl_yvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
+        # # for deliverable 3.1-3.2
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 10
+        # Q[1,1] *= 80
+        # Q[2,2] *= 1
+        # R = 100 * np.eye(nu)
+
+        # # for deliverable 3.3
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 200
+        # Q[1,1] *= 80
+        # Q[2,2] *= 1
+        # R = 100 * np.eye(nu)
+
+        # for deliverable 4.1
         Q = 0.01 * np.eye(nx)
         Q[0,0] *= 6000
         Q[1,1] *= 30
@@ -68,8 +83,8 @@ class MPCControl_yvel(MPCControl_base):
         # Left: projection on (x0, x1)
         proj01 = Xf.projection(dims=(0, 1))
         proj01.plot(axes[0])
-        axes[0].set_title("Projection on (ω_y, α)")
-        axes[0].set_xlabel("ω_y")
+        axes[0].set_title("Projection on (ω_x, α)")
+        axes[0].set_xlabel("ω_x")
         axes[0].set_ylabel("α")
 
         # Right: projection on (x1, x2)

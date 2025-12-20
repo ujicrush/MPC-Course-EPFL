@@ -1,152 +1,97 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "888948fc-12b0-4cb8-81b2-cd68aa33b5c8",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import numpy as np\n",
-    "from scipy.signal import cont2discrete, place_poles\n",
-    "\n",
-    "\n",
-    "class MPCVelControl:\n",
-    "\n",
-    "    def new_controller(self, rocket, Ts, H):\n",
-    "        self.Ts = Ts\n",
-    "        self.H = H\n",
-    "\n",
-    "        # Linearize around hover\n",
-    "        xs, us = rocket.trim()\n",
-    "        sys = rocket.linearize_sys(xs, us)\n",
-    "\n",
-    "        # Extract z-velocity subsystem\n",
-    "        # States: [vz]\n",
-    "        # Input: Pav\n",
-    "        iz = sys.state_names.index(\"vz\")\n",
-    "        iu = sys.input_names.index(\"Pavg\")\n",
-    "\n",
-    "        A = sys.A[np.ix_([iz], [iz])]\n",
-    "        B = sys.B[np.ix_([iz], [iu])]\n",
-    "\n",
-    "        # Disturbance enters additively in acceleration\n",
-    "        Bd = np.array([[1.0]])\n",
-    "\n",
-    "        # Discretize\n",
-    "        Ad, Bd_u, _, _, _ = cont2discrete((A, B, np.eye(1), 0), Ts)\n",
-    "        Bd_d = Ts * Bd\n",
-    "\n",
-    "        self.ctrl_z = MPCZOffsetFree(\n",
-    "            Ad, Bd_u, Bd_d,\n",
-    "            Ts=Ts,\n",
-    "            umin=40.0,\n",
-    "            umax=80.0\n",
-    "        )\n",
-    "\n",
-    "        return self\n",
-    "\n",
-    "    def get_u(self, x):\n",
-    "        \"\"\"\n",
-    "        Called by rocket.simulate_control\n",
-    "        \"\"\"\n",
-    "        vz = np.array([x[8]])   # vz index = 8\n",
-    "        u_z = self.ctrl_z.get_u(vz)\n",
-    "\n",
-    "        # Full input vector (keep others at trim)\n",
-    "        u = np.zeros(4)\n",
-    "        u[2] = u_z   # Pavg\n",
-    "\n",
-    "        return u\n",
-    "\n",
-    "\n",
-    "class MPCZOffsetFree:\n",
-    "    \"\"\"\n",
-    "    Offset-free z-velocity MPC using disturbance observer\n",
-    "    \"\"\"\n",
-    "\n",
-    "    def __init__(self, Ad, Bd, Bd_d, Ts, umin, umax):\n",
-    "        self.Ad = Ad\n",
-    "        self.Bd = Bd\n",
-    "        self.Bd_d = Bd_d\n",
-    "        self.Ts = Ts\n",
-    "\n",
-    "        self.umin = umin\n",
-    "        self.umax = umax\n",
-    "\n",
-    "        self.nx = 1\n",
-    "        self.nu = 1\n",
-    "\n",
-    "        # Estimates\n",
-    "        self.x_hat = np.zeros(1)\n",
-    "        self.d_hat = np.zeros(1)\n",
-    "        self.u_prev = np.zeros(1)\n",
-    "\n",
-    "        # Augmented observer system\n",
-    "        Aa = np.block([\n",
-    "            [Ad, Bd_d],\n",
-    "            [np.zeros((1, 1)), np.eye(1)]\n",
-    "        ])\n",
-    "        Ba = np.vstack([Bd, np.zeros((1, 1))])\n",
-    "        Ca = np.hstack([np.eye(1), np.zeros((1, 1))])\n",
-    "\n",
-    "        # Observer poles (fast, stable)\n",
-    "        poles = [0.4, 0.5]\n",
-    "        self.L = place_poles(Aa.T, Ca.T, poles).gain_matrix.T\n",
-    "\n",
-    "        self.Aa = Aa\n",
-    "        self.Ba = Ba\n",
-    "        self.Ca = Ca\n",
-    "\n",
-    "    def get_u(self, x_meas):\n",
-    "        \"\"\"\n",
-    "        x_meas is treated as a measurement (per project hint)\n",
-    "        \"\"\"\n",
-    "\n",
-    "        # ---- Observer update ----\n",
-    "        xa = np.hstack([self.x_hat, self.d_hat])\n",
-    "\n",
-    "        xa = (\n",
-    "            self.Aa @ xa\n",
-    "            + self.Ba @ self.u_prev\n",
-    "            + self.L @ (x_meas - self.Ca @ xa)\n",
-    "        )\n",
-    "\n",
-    "        self.x_hat = xa[0:1]\n",
-    "        self.d_hat = xa[1:2]\n",
-    "\n",
-    "        # ---- Offset-free control law ----\n",
-    "        # u = -(x + disturbance compensation)\n",
-    "        K = 3.0\n",
-    "        u = -K * self.x_hat - self.d_hat\n",
-    "\n",
-    "        # Saturation\n",
-    "        u = np.clip(u, self.umin, self.umax)\n",
-    "\n",
-    "        self.u_prev = np.array([u])\n",
-    "        return u\n"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.5"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+import numpy as np
+
+from src.rocket import Rocket
+
+from .MPCControl_roll import MPCControl_roll
+from .MPCControl_xvel import MPCControl_xvel
+from .MPCControl_yvel import MPCControl_yvel
+from .MPCControl_zvel import MPCControl_zvel
+
+
+class MPCVelControl:
+    mpc_x: MPCControl_xvel
+    mpc_y: MPCControl_yvel
+    mpc_z: MPCControl_zvel
+    mpc_roll: MPCControl_roll
+
+    def __init__(self) -> None:
+        pass
+
+    def new_controller(self, rocket: Rocket, Ts: float, H: float) -> None:
+        self.xs, self.us = rocket.trim()
+        A, B = rocket.linearize(self.xs, self.us)
+
+        self.mpc_x = MPCControl_xvel(A, B, self.xs, self.us, Ts, H)
+        self.mpc_y = MPCControl_yvel(A, B, self.xs, self.us, Ts, H)
+        self.mpc_z = MPCControl_zvel(A, B, self.xs, self.us, Ts, H)
+        self.mpc_roll = MPCControl_roll(A, B, self.xs, self.us, Ts, H)
+
+        return self
+
+    def load_controllers(
+        self,
+        mpc_x: MPCControl_xvel,
+        mpc_y: MPCControl_yvel,
+        mpc_z: MPCControl_zvel,
+        mpc_roll: MPCControl_roll,
+    ) -> None:
+        self.mpc_x = mpc_x
+        self.mpc_y = mpc_y
+        self.mpc_z = mpc_z
+        self.mpc_roll = mpc_roll
+
+        return self
+
+    def estimate_parameters(self, x_data: np.ndarray, u_data: np.ndarray) -> None:
+        return
+
+    def get_u(
+        self,
+        t0: float,
+        x0: np.ndarray,
+        x_target: np.ndarray = None,
+        u_target: np.ndarray = None,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        u0 = np.zeros(4)
+        t_traj = np.arange(self.mpc_x.N + 1) * self.mpc_x.Ts + t0
+        x_traj = np.zeros((12, self.mpc_x.N + 1))
+        u_traj = np.zeros((4, self.mpc_x.N))
+
+        if x_target is None:
+            x_target = self.xs
+
+        if u_target is None:
+            u_target = self.us
+
+        u0[self.mpc_x.u_ids], x_traj[self.mpc_x.x_ids], u_traj[self.mpc_x.u_ids] = (
+            self.mpc_x.get_u(
+                x0[self.mpc_x.x_ids],
+                x_target[self.mpc_x.x_ids],
+                u_target[self.mpc_x.u_ids],
+            )
+        )
+        u0[self.mpc_y.u_ids], x_traj[self.mpc_y.x_ids], u_traj[self.mpc_y.u_ids] = (
+            self.mpc_y.get_u(
+                x0[self.mpc_y.x_ids],
+                x_target[self.mpc_y.x_ids],
+                u_target[self.mpc_y.u_ids],
+            )
+        )
+        u0[self.mpc_z.u_ids], x_traj[self.mpc_z.x_ids], u_traj[self.mpc_z.u_ids] = (
+            self.mpc_z.get_u(
+                x0[self.mpc_z.x_ids],
+                x_target[self.mpc_z.x_ids],
+                u_target[self.mpc_z.u_ids],
+            )
+        )
+        (
+            u0[self.mpc_roll.u_ids],
+            x_traj[self.mpc_roll.x_ids],
+            u_traj[self.mpc_roll.u_ids],
+        ) = self.mpc_roll.get_u(
+            x0[self.mpc_roll.x_ids],
+            x_target[self.mpc_roll.x_ids],
+            u_target[self.mpc_roll.u_ids],
+        )
+
+        return u0, x_traj, u_traj, t_traj

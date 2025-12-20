@@ -53,13 +53,41 @@ class MPCControl_base:
         self._setup_controller()
 
     def _setup_controller(self) -> None:
-        #################################################
-        # YOUR CODE HERE
+        nx, nu, N = self.nx, self.nu, self.N
+    
+        # Decision variables
+        self.x = cp.Variable((nx, N + 1))
+        self.u = cp.Variable((nu, N))
+    
+        # Parameters (updated online)
+        self.x0_param = cp.Parameter(nx)
+        self.xs_param = cp.Parameter(nx, value=self.xs)
+        self.us_param = cp.Parameter(nu, value=self.us)
+    
+        # Weights
+        Q = np.eye(nx)
+        R = 0.1 * np.eye(nu)
+        P = Q
+    
+        cost = 0
+        constraints = []
+    
+        # Initial condition
+        constraints += [self.x[:, 0] == self.x0_param]
+    
+        for k in range(N):
+            cost += cp.quad_form(self.x[:, k] - self.xs_param, Q)
+            cost += cp.quad_form(self.u[:, k] - self.us_param, R)
+    
+            constraints += [
+                self.x[:, k + 1] == self.A @ self.x[:, k] + self.B @ self.u[:, k]
+            ]
+    
+        # Terminal cost
+        cost += cp.quad_form(self.x[:, N] - self.xs_param, P)
+    
+        self.ocp = cp.Problem(cp.Minimize(cost), constraints)
 
-        self.ocp = ...
-
-        # YOUR CODE HERE
-        #################################################
 
     @staticmethod
     def _discretize(A: np.ndarray, B: np.ndarray, Ts: float):
@@ -72,14 +100,23 @@ class MPCControl_base:
     def get_u(
         self, x0: np.ndarray, x_target: np.ndarray = None, u_target: np.ndarray = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        #################################################
-        # YOUR CODE HERE
-
-        u0 = ...
-        x_traj = ...
-        u_traj = ...
-
-        # YOUR CODE HERE
-        #################################################
-
+    
+        # Update parameters
+        self.x0_param.value = x0
+        if x_target is not None:
+            self.xs_param.value = x_target
+        if u_target is not None:
+            self.us_param.value = u_target
+    
+        # Solve
+        self.ocp.solve(solver=cp.OSQP, warm_start=True)
+    
+        if self.ocp.status not in ["optimal", "optimal_inaccurate"]:
+            raise RuntimeError("MPC infeasible")
+    
+        u0 = self.u[:, 0].value
+        x_traj = self.x.value
+        u_traj = self.u.value
+    
         return u0, x_traj, u_traj
+

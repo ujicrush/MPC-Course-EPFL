@@ -67,9 +67,6 @@ class MPCControl_base:
         constraints = []
         constraints.append(self.X[:, 0] == self.x0_param)
 
-        for k in range(N):
-            constraints.append(self.X[:, k + 1] == A @ self.X[:, k] + B @ self.U[:, k])
-
         self.constraints = constraints
         # YOUR CODE HERE
         #################################################
@@ -92,7 +89,7 @@ class MPCControl_base:
         else:
             x_sub = x0
 
-        delta_x0 = x_sub - self.xs
+        delta_x0 = x_sub - x_target if x_target is not None else x_sub - self.xs
         self.x0_param.value = delta_x0
 
         self.ocp.solve(solver=cp.GUROBI, warm_start=True)
@@ -106,10 +103,9 @@ class MPCControl_base:
             delta_x_traj = self.X.value
             delta_u_traj = self.U.value
 
-        u0 = delta_u0 + self.us
-        u_traj = delta_u_traj + self.us.reshape(-1, 1)
-        x_traj = delta_x_traj + self.xs.reshape(-1, 1)
-
+        u0 = delta_u0 + u_target if u_target is not None else delta_u0 + self.us
+        u_traj = delta_u_traj + u_target.reshape(-1, 1) if u_target is not None else delta_u_traj + self.us.reshape(-1, 1)
+        x_traj = delta_x_traj + x_target.reshape(-1, 1) if x_target is not None else delta_x_traj + self.xs.reshape(-1, 1)
         # YOUR CODE HERE
         #################################################
 

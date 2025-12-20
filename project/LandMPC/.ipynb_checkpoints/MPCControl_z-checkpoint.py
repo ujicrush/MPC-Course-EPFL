@@ -25,7 +25,7 @@ class MPCControl_z(MPCControl_base):
 
         self.X = cp.Variable((nx, N + 1))
         self.U = cp.Variable((nu, N))
-        self.x0 = cp.Parameter(nx)
+    self.x0 = cp.Parameter(nx)
         
         # --- Disturbance bound ---
         w_max = 15.0

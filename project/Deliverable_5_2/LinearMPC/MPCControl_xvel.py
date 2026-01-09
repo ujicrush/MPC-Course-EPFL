@@ -43,67 +43,19 @@ class MPCControl_xvel(MPCControl_base):
         self.Q = Q
         self.R = R
 
-        K, Qf, _ = dlqr(A, B, Q, R)
-        self.K = -K
+        _, Qf, _ = dlqr(A, B, Q, R)
         self.Qf = Qf
 
-        # x in X = { x | Fx <= f }
-        F_x = np.array([
-            [0.0, 1.0, 0.0],
-            [0.0,-1.0, 0.0],
-        ])
-        f_x = np.array([0.1745, 0.1745])
-
-        # u in U = { u | Mu <= m }
-        M_u = np.array([[1.0],
-                        [-1.0]])
-        m_u = np.array([0.26, 0.26])
-
-        F_term = np.vstack([F_x, M_u @ self.K])   # (4,3)
-        f_term = np.hstack([f_x, m_u])            # (4,)
-
-        Xf = Polyhedron.from_Hrep(F_term, f_term)
-        Acl = A + B @ self.K
-
-        while True:
-            Xf_prev = Xf
-            F_O, f_O = Xf.A, Xf.b
-            pre = Polyhedron.from_Hrep(F_O @ Acl, f_O)
-            Xf = Xf.intersect(pre)
-            Xf.minHrep(True)
-            _ = Xf.Vrep     # this is a tempary fix since the contains() method is not robust enough when both inner and outer polyhera only has H-rep.
-            if Xf == Xf_prev:
-                break
-
-        Ff, ff = Xf.A, Xf.b
-
-        # Visualization of terminal invariant set for x-subsystem
-        fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-
-        # Left: projection on (x0, x1)
-        proj01 = Xf.projection(dims=(0, 1))
-        proj01.plot(axes[0])
-        axes[0].set_title("Projection on (ω_y, β)")
-        axes[0].set_xlabel("ω_y")
-        axes[0].set_ylabel("β")
-
-        # Right: projection on (x1, x2)
-        proj12 = Xf.projection(dims=(1, 2))
-        proj12.plot(axes[1])
-        axes[1].set_title("Projection on (β, v_x)")
-        axes[1].set_xlabel("β")
-        axes[1].set_ylabel("v_x")
-
-        fig.suptitle("Terminal invariant set for x-subsystem", fontsize=14)
-        plt.tight_layout()
-        plt.show()
+        for k in range(self.N):
+            self.constraints += [
+                self.X[:, k + 1] == A @ self.X[:, k] + B @ self.U[:, k]
+            ]
 
         self.constraints += [
             self.X[1, :] <= 0.1745,
             self.X[1, :] >= -0.1745,
             self.U <= 0.26,
-            self.U >= -0.26,
-            Ff @ self.X[:, self.N] <= ff
+            self.U >= -0.26
         ]
 
         self.objective = 0

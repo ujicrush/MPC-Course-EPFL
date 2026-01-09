@@ -40,49 +40,17 @@ class MPCControl_roll(MPCControl_base):
         self.Q = Q
         self.R = R
 
-        K, Qf, _ = dlqr(A, B, Q, R)
-        self.K = -K
+        _, Qf, _ = dlqr(A, B, Q, R)
         self.Qf = Qf
 
-        M = np.array([[1.0],
-                    [-1.0]])
-        m = np.array([20.0,
-                    20.0])
-
-        F_term = M @ self.K        # shape (2,2)
-        f_term = m
-
-        Xf = Polyhedron.from_Hrep(F_term, f_term)
-        Acl = A + B @ self.K
-
-        while True:
-            Xf_prev = Xf
-            F_O, f_O = Xf.A, Xf.b
-            pre = Polyhedron.from_Hrep(F_O @ Acl, f_O)
-            Xf = Xf.intersect(pre)
-            # Xf.minHrep(True)
-            # _ = Xf.Vrep 
-            if Xf == Xf_prev:
-                break
-
-        Ff, ff = Xf.A, Xf.b
-
-        fig, ax = plt.subplots(1, 1, figsize=(5, 4))
-
-        proj01 = Xf.projection(dims=(0, 1))
-        proj01.plot(ax)
-
-        ax.set_title("Terminal invariant set for roll subsystem", fontsize=14)
-        ax.set_xlabel("ω_z")
-        ax.set_ylabel("γ")
-
-        plt.tight_layout()
-        plt.show()
+        for k in range(self.N):
+            self.constraints += [
+                self.X[:, k + 1] == A @ self.X[:, k] + B @ self.U[:, k]
+            ]
 
         self.constraints +=[
             self.U <= 20,
-            self.U >= -20,
-            Ff @ self.X[:, self.N] <= ff
+            self.U >= -20
         ]
 
         self.objective = 0

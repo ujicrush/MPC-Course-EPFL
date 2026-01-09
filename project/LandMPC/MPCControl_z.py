@@ -2,6 +2,7 @@ import cvxpy as cp
 import numpy as np
 from control import dlqr
 from mpt4py import Polyhedron
+import matplotlib.pyplot as plt
 
 from .MPCControl_base import MPCControl_base
 
@@ -43,29 +44,6 @@ class MPCControl_z(MPCControl_base):
         W_e = Polyhedron.from_Vrep(V=np.vstack([v1, v2]))
         W_e.minHrep()
         self.W = W_e
-
-        # def min_robust_invariant_set(A_cl: np.ndarray, W: Polyhedron, max_iter: int = 30) -> Polyhedron:
-        #     # TODO: ------------------
-        #     # TODO: add your code here
-        #     nx = A_cl.shape[0]
-        #     Omega = Polyhedron.from_Vrep(V=np.zeros((1, nx)))
-        #     iter = 0
-        #     A_cl_ith_power = np.eye(nx)
-        #     while iter < max_iter:
-        #         iter += 1
-        #         A_cl_ith_power = np.linalg.matrix_power(A_cl, iter)
-        #         Omega_next = Omega + A_cl_ith_power @ W
-        #         Omega_next.minHrep()
-        #         if np.linalg.matrix_norm(A_cl_ith_power, ord=2) < 1e-2:
-        #             print('Minimal robust invariant set computation converged after {0} iterations.'.format(iter))
-        #             break
-        #         if iter == max_iter:
-        #             print('Minimal robust invariant set computation did NOT converge after {0} iterations.'.format(iter))
-        #         Omega = Omega_next
-        #     return Omega_next
-
-        # E = min_robust_invariant_set(A_cl, W_e)
-        # self.E = E
 
         def mrpi_zonotope_2d(A_cl, Bcol, w_min=-15.0, w_max=5.0, max_iter=80, tol=1e-8):
             """
@@ -178,6 +156,18 @@ class MPCControl_z(MPCControl_base):
         X_and_KU_tilde = X_tilde.intersect(Polyhedron.from_Hrep(U_tilde.A @ self.K, U_tilde.b))
         Xf_tilde = max_invariant_set(A_cl, X_and_KU_tilde)
         self.Xf_tilde = Xf_tilde
+         
+        fig, ax = plt.subplots(1, 2, figsize=(10, 4)) # E
+        E.plot(ax[0])
+        ax[0].set_title("Minimal RPI set $\\mathcal{E}$")
+        ax[0].set_xlabel("$\\Delta v_z$")
+        ax[0].set_ylabel("$\\Delta z$")
+        Xf_tilde.plot(ax[1])
+        ax[1].set_title("Terminal set $\\mathcal{X}_f$")
+        ax[1].set_xlabel("$\\Delta v_z$")
+        ax[1].set_ylabel("$\\Delta z$")
+        plt.tight_layout()
+        plt.show()
 
         # tube initial condition: x0 - z0 ∈ E
         self.constraints += [ E.A @ (self.x0_param - self.Z[:, 0]) <= E.b ]

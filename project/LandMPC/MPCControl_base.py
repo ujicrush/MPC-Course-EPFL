@@ -92,7 +92,7 @@ class MPCControl_base:
 
         self.ocp.solve(warm_start=True)
 
-        if self.ocp.status != cp.OPTIMAL:
+        if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
             delta_u0 = np.zeros(self.nu)
             delta_x_traj = np.tile(delta_x0.reshape(-1, 1), (1, self.N + 1))
             delta_u_traj = np.zeros((self.nu, self.N))

@@ -220,7 +220,7 @@ class MPCControl_z(MPCControl_base):
 
         self.ocp.solve(warm_start=False, verbose=False, **{"NumericFocus": 3, "BarHomogeneous": 1})
 
-        if self.ocp.status != cp.OPTIMAL:
+        if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
             v0 = np.zeros(self.nu)
             z0 = delta_x0.copy()
             z_traj = np.tile(delta_x0.reshape(-1, 1), (1, self.N + 1))

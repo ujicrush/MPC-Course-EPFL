@@ -19,26 +19,26 @@ class MPCControl_xvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        # # for deliverable 3.1-3.2
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 10
-        # Q[1,1] *= 80
-        # Q[2,2] *= 1
-        # R = 100 * np.eye(nu)
+        # for deliverable 3.1-3.2
+        Q = 0.01 * np.eye(nx)
+        Q[0,0] *= 10
+        Q[1,1] *= 80
+        Q[2,2] *= 2
+        R = 100.0 * np.eye(nu)
 
-        # # for deliverable 3.3
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 200
-        # Q[1,1] *= 80
-        # Q[2,2] *= 1
-        # R = 100 * np.eye(nu)
+        # # # for deliverable 3.3
+        # # Q = 0.01 * np.eye(nx)
+        # # Q[0,0] *= 200
+        # # Q[1,1] *= 80
+        # # Q[2,2] *= 1
+        # # R = 100 * np.eye(nu)
 
         # for deliverable 4.1
-        Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 7000
-        Q[1,1] *= 20
-        Q[2,2] *= 1
-        R = 10 * np.eye(nu)
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 7000
+        # Q[1,1] *= 20
+        # Q[2,2] *= 1
+        # R = 10 * np.eye(nu)
 
         self.Q = Q
         self.R = R

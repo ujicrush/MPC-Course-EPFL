@@ -19,12 +19,12 @@ class MPCControl_yvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        # # for deliverable 3.1-3.2
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 10
-        # Q[1,1] *= 80
-        # Q[2,2] *= 1
-        # R = 100 * np.eye(nu)
+        # for deliverable 3.1-3.2
+        Q = 0.01 * np.eye(nx)
+        Q[0,0] *= 10
+        Q[1,1] *= 80
+        Q[2,2] *= 2
+        R = 100.0 * np.eye(nu)
 
         # # for deliverable 3.3
         # Q = 0.01 * np.eye(nx)
@@ -34,11 +34,11 @@ class MPCControl_yvel(MPCControl_base):
         # R = 100 * np.eye(nu)
 
         # for deliverable 4.1
-        Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 6000
-        Q[1,1] *= 30
-        Q[2,2] *= 1
-        R = 10 * np.eye(nu)
+        # Q = 0.01 * np.eye(nx)
+        # Q[0,0] *= 6000
+        # Q[1,1] *= 30
+        # Q[2,2] *= 1
+        # R = 10 * np.eye(nu)
 
         self.Q = Q
         self.R = R
@@ -70,7 +70,7 @@ class MPCControl_yvel(MPCControl_base):
             F_O, f_O = Xf.A, Xf.b
             pre = Polyhedron.from_Hrep(F_O @ Acl, f_O)
             Xf = Xf.intersect(pre)
-            # Xf.minHrep(True)
+            Xf.minHrep(True)
             # _ = Xf.Vrep 
             if Xf == Xf_prev:
                 break

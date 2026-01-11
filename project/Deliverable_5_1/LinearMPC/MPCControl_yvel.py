@@ -19,26 +19,11 @@ class MPCControl_yvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        # # for deliverable 3.1-3.2
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 10
-        # Q[1,1] *= 80
-        # Q[2,2] *= 1
-        # R = 100 * np.eye(nu)
-
-        # # for deliverable 3.3
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 200
-        # Q[1,1] *= 80
-        # Q[2,2] *= 1
-        # R = 100 * np.eye(nu)
-
-        # for deliverable 4.1
         Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 6000
-        Q[1,1] *= 30
-        Q[2,2] *= 1
-        R = 10 * np.eye(nu)
+        Q[0,0] *= 5500
+        Q[1,1] *= 1.5
+        Q[2,2] *= 3.5
+        R = 1.0 * np.eye(nu)
 
         self.Q = Q
         self.R = R
@@ -73,7 +58,28 @@ class MPCControl_yvel(MPCControl_base):
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         #################################################
         # YOUR CODE HERE
-        u0, x_traj, u_traj = super().get_u(x0, x_target, u_target)
+        if x0.shape[0] != self.nx:
+            x_sub = x0[self.x_ids]
+        else:
+            x_sub = x0
+
+        delta_x0 = x_sub - x_target if x_target is not None else x_sub - self.xs
+        self.x0_param.value = delta_x0
+
+        self.ocp.solve(warm_start=True)
+
+        if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
+            delta_u0 = np.zeros(self.nu)
+            delta_x_traj = np.tile(delta_x0.reshape(-1, 1), (1, self.N + 1))
+            delta_u_traj = np.zeros((self.nu, self.N))
+        else:
+            delta_u0 = self.U[:, 0].value
+            delta_x_traj = self.X.value
+            delta_u_traj = self.U.value
+
+        u0 = delta_u0 + u_target if u_target is not None else delta_u0 + self.us
+        u_traj = delta_u_traj + u_target.reshape(-1, 1) if u_target is not None else delta_u_traj + self.us.reshape(-1, 1)
+        x_traj = delta_x_traj + x_target.reshape(-1, 1) if x_target is not None else delta_x_traj + self.xs.reshape(-1, 1)
         # YOUR CODE HERE
         #################################################
 

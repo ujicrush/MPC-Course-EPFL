@@ -22,13 +22,10 @@ class MPCControl_zvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        # # for deliverable 3.1-3.3
-        # Q = 100 * np.eye(nx)
-        # R = 3.5 * np.eye(nu)
+        self.d_param = cp.Parameter((1,), name="d_est")
 
-        # for deliverable 4.1
-        Q = 100 * np.eye(nx)
-        R = 1.5 * np.eye(nu)
+        Q = 50 * np.eye(nx)
+        R = 0.08 * np.eye(nu)
 
         self.Q = Q
         self.R = R
@@ -37,16 +34,21 @@ class MPCControl_zvel(MPCControl_base):
         self.K = -K
         self.Qf = Qf
 
-        us = self.us[0]
-        
-        # --- INPUT CONSTRAINTS ONLY (terminal set DROPPED) ---
-        self.constraints +=[
-            self.U <= 80 - us,
-            self.U >= 40 - us
+        # us = self.us[0]
+
+        # # --- INPUT CONSTRAINTS ONLY (terminal set DROPPED) ---
+        # self.constraints +=[
+        #     self.U <= 80 - us,
+        #     self.U >= 40 - us
+        # ]
+
+        self.us_param = cp.Parameter((1,), name="u_s_compensate")
+        self.constraints += [
+            self.U <= 80 - self.us_param,
+            self.U >= 40 - self.us_param,
         ]
 
         # --- SYSTEM DYNAMICS ---
-        self.d_param = cp.Parameter()
         for k in range(N):
             self.constraints += [
                 self.X[:, k + 1] == A @ self.X[:, k] + B @ (self.U[:, k] + self.d_param)
@@ -68,20 +70,49 @@ class MPCControl_zvel(MPCControl_base):
         self, x0: np.ndarray, x_target: np.ndarray = None, u_target: np.ndarray = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         #################################################
-        x_meas = np.asarray(x0).reshape(self.nx,)
 
-        if not hasattr(self, "x_estimate"):
-            self.x_estimate = x_meas.copy()
+        if x0.shape[0] != self.nx:
+            x_sub = x0[self.x_ids]
+        else:
+            x_sub = x0
+
+        x_meas = np.asarray(x_sub).reshape(self.nx,)
 
         # estimator update (use previous applied input)
         self.update_estimator(x_meas, self.u_prev)
-        self.d_param.value = self.d_estimate
+        self.d_param.value = np.array([self.d_estimate], dtype=float)
 
-        # run MPC (keep interface as-is)
-        u0, x_traj, u_traj = super().get_u(self.x_estimate, x_target, u_target)
+        if u_target is not None:
+            us = float(np.asarray(u_target).reshape(-1,)[0])
+        else:
+            # self.us might be full vector -> take z channel
+            us = float(np.asarray(self.us).reshape(-1,)[self.u_ids[0]])
+        self.us_param.value = np.array([us], dtype=float)
 
-        # store applied input for next estimator step
-        self.u_prev = np.asarray(u0).reshape(self.nu,)
+        if x_target is None:
+            x_ref = 0.0
+        else:
+            x_ref = float(np.asarray(x_target).reshape(-1,)[0])
+
+        x_used = self.x_estimate if self.x_estimate is not None else x_meas
+        self.x0_param.value = (x_used - x_ref).reshape(self.nx,)
+
+        self.ocp.solve()
+
+        if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
+            delta_u0 = np.zeros(self.nu)
+            delta_x_traj = np.tile(self.x0_param.value.reshape(-1, 1), (1, self.N + 1))
+            delta_u_traj = np.zeros((self.nu, self.N))
+        else:
+            delta_u0 = np.asarray(self.U[:, 0].value).reshape(self.nu,)
+            delta_x_traj = np.asarray(self.X.value)
+            delta_u_traj = np.asarray(self.U.value)
+        
+        u0 = delta_u0 + us
+        u_traj = delta_u_traj + us  # broadcast over horizon
+        x_traj = delta_x_traj + x_ref
+
+        self.u_prev = np.asarray(delta_u0).reshape(self.nu,)
 
         return u0, x_traj, u_traj
         #################################################
@@ -89,14 +120,19 @@ class MPCControl_zvel(MPCControl_base):
     def setup_estimator(self):
         ##################################################
         self.d_estimate = 0.0
-        self.d_gain = 0.3
+        self.d_gain = 3
         self.u_prev = np.zeros((self.nu,))
+        self.x_estimate = None
         ##################################################
 
     def update_estimator(self, x_data: np.ndarray, u_data: np.ndarray) -> None:
         ##################################################
         A, B = self.A, self.B
 
+        if self.x_estimate is None:
+            self.x_estimate = x_data.copy()
+            return
+        
         # predict next state
         x_pred = A @ self.x_estimate + B @ (u_data + self.d_estimate)
 

@@ -18,24 +18,11 @@ class MPCControl_roll(MPCControl_base):
 
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
-
-        # # for deliverable 3.1-3.2
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 5000
-        # Q[1,1] *= 5000
-        # R = 0.1 * np.eye(nu)
-
-        # for deliverable 3.3
-        # Q = 0.01 * np.eye(nx)
-        # Q[0,0] *= 5000
-        # Q[1,1] *= 10000
-        # R = 0.1 * np.eye(nu)   
-
-        # for deliverable 4.1
+        
         Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 100
+        Q[0,0] *= 180
         Q[1,1] *= 10
-        R = 0.1 * np.eye(nu)
+        R = 0.001 * np.eye(nu)
 
         self.Q = Q
         self.R = R
@@ -68,7 +55,28 @@ class MPCControl_roll(MPCControl_base):
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         #################################################
         # YOUR CODE HERE
-        u0, x_traj, u_traj = super().get_u(x0, x_target, u_target)
+        if x0.shape[0] != self.nx:
+            x_sub = x0[self.x_ids]
+        else:
+            x_sub = x0
+
+        delta_x0 = x_sub - x_target if x_target is not None else x_sub - self.xs
+        self.x0_param.value = delta_x0
+
+        self.ocp.solve(warm_start=True)
+
+        if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
+            delta_u0 = np.zeros(self.nu)
+            delta_x_traj = np.tile(delta_x0.reshape(-1, 1), (1, self.N + 1))
+            delta_u_traj = np.zeros((self.nu, self.N))
+        else:
+            delta_u0 = self.U[:, 0].value
+            delta_x_traj = self.X.value
+            delta_u_traj = self.U.value
+
+        u0 = delta_u0 + u_target if u_target is not None else delta_u0 + self.us
+        u_traj = delta_u_traj + u_target.reshape(-1, 1) if u_target is not None else delta_u_traj + self.us.reshape(-1, 1)
+        x_traj = delta_x_traj + x_target.reshape(-1, 1) if x_target is not None else delta_x_traj + self.xs.reshape(-1, 1)
         # YOUR CODE HERE
         #################################################
 

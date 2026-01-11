@@ -27,9 +27,9 @@ class MPCControl_roll(MPCControl_base):
 
         # for deliverable 4.1
         Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 100
+        Q[0,0] *= 180
         Q[1,1] *= 10
-        R = 0.1 * np.eye(nu)
+        R = 0.001 * np.eye(nu)
 
         self.Q = Q
         self.R = R

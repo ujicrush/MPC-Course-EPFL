@@ -28,10 +28,10 @@ class MPCControl_yvel(MPCControl_base):
 
         # for deliverable 4.1
         Q = 0.01 * np.eye(nx)
-        Q[0,0] *= 5800
-        Q[1,1] *= 30
-        Q[2,2] *= 2.2
-        R = 1 * np.eye(nu)
+        Q[0,0] *= 5500
+        Q[1,1] *= 1.5
+        Q[2,2] *= 3.5
+        R = 1.0 * np.eye(nu)
 
         self.Q = Q
         self.R = R

@@ -216,9 +216,9 @@ class MPCControl_z(MPCControl_base):
         self.x0_param.value = delta_x0
 
         # 3) solve nominal tube MPC for (Z,V)
-        # self.ocp.solve(solver=cp.GUROBI, verbose=False)
+        # self.ocp.solve(verbose=False)
 
-        self.ocp.solve(solver=cp.GUROBI, warm_start=False, verbose=False, **{"NumericFocus": 3, "BarHomogeneous": 1})
+        self.ocp.solve(warm_start=False, verbose=False, **{"NumericFocus": 3, "BarHomogeneous": 1})
 
         if self.ocp.status != cp.OPTIMAL:
             v0 = np.zeros(self.nu)

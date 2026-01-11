@@ -134,6 +134,12 @@ class MPCControl_z(MPCControl_base):
         U_tilde = U_set.pontryagin_difference(KE)
         self.U_tilde = U_tilde
 
+        u_vertices = self.U_tilde.V.flatten()
+        u_min_tilde = np.min(u_vertices)
+        u_max_tilde = np.max(u_vertices)
+
+        print(f"[z] Tightened input constraint U_tilde = [{u_min_tilde:.3f}, {u_max_tilde:.3f}]")
+
         def max_invariant_set(A_cl, X: Polyhedron, max_iter = 100) -> Polyhedron:
             O = X
             iter = 1
@@ -216,9 +222,7 @@ class MPCControl_z(MPCControl_base):
         self.x0_param.value = delta_x0
 
         # 3) solve nominal tube MPC for (Z,V)
-        # self.ocp.solve(verbose=False)
-
-        self.ocp.solve(warm_start=False, verbose=False, **{"NumericFocus": 3, "BarHomogeneous": 1})
+        self.ocp.solve(max_iter=200000)
 
         if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
             v0 = np.zeros(self.nu)

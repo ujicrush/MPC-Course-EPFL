@@ -16,8 +16,8 @@ class MPCControl_roll(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        Q = np.diag([10.0, 50.0])
-        R = np.array([[1.0]])
+        Q = np.diag([10.0, 30.0])
+        R = np.array([[0.01]])
         self.Q = Q
         self.R = R
 

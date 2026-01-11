@@ -90,7 +90,7 @@ class MPCControl_base:
         delta_x0 = x_sub - x_target if x_target is not None else x_sub - self.xs
         self.x0_param.value = delta_x0
 
-        self.ocp.solve(warm_start=True)
+        self.ocp.solve()
 
         if self.ocp.status not in [cp.OPTIMAL, cp.OPTIMAL_INACCURATE]:
             delta_u0 = np.zeros(self.nu)

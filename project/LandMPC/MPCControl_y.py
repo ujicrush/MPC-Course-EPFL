@@ -16,8 +16,9 @@ class MPCControl_y(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        Q = np.diag([10.0, 10.0, 10.0, 50.0])
-        R = np.array([[1.0]])
+        Q = np.diag([100.0, 200.0, 20.0, 50.0])
+        R = np.array([[10.0]])
+        
         S = 1e4
         self.Q = Q
         self.R = R

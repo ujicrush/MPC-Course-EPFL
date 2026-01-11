@@ -25,7 +25,7 @@ class MPCControl_zvel(MPCControl_base):
         self.d_param = cp.Parameter((1,), name="d_est")
 
         Q = 50 * np.eye(nx)
-        R = 0.08 * np.eye(nu)
+        R = 0.1 * np.eye(nu)
 
         self.Q = Q
         self.R = R

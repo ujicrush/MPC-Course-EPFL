@@ -21,9 +21,9 @@ class MPCControl_yvel(MPCControl_base):
 
         Q = 0.01 * np.eye(nx)
         Q[0,0] *= 5500
-        Q[1,1] *= 1.5
+        Q[1,1] *= 1
         Q[2,2] *= 3.5
-        R = 1.0 * np.eye(nu)
+        R = 0.001 * np.eye(nu)
 
         self.Q = Q
         self.R = R

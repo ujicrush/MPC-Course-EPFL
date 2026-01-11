@@ -22,9 +22,13 @@ class MPCControl_zvel(MPCControl_base):
         A, B = self.A, self.B
         nx, nu, N = self.nx, self.nu, self.N
 
-        # for deliverable 3.1-3.3
-        Q = 100 * np.eye(nx)
-        R = 3.5 * np.eye(nu)
+        # for deliverable 3.1
+        # Q = 100 * np.eye(nx)
+        # R = 3.5 * np.eye(nu)
+
+        # for deliverable 3.2-3.3
+        Q = 175 * np.eye(nx)
+        R = 5 * np.eye(nu)
 
         # for deliverable 4.1
         # Q = 100 * np.eye(nx)
